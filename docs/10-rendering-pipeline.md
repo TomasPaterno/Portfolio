@@ -87,6 +87,7 @@ Build log observado: 19 páginas estáticas generadas.
 
 ## 12.6 Caching
 
-**No hay** `unstable_cache`, `"use cache"`, o `revalidate` en loaders.
-
-Cada request/build re-lee disco. Refactor CMS: cache por slug.
+- **Producción:** `getAllProjects` usa `unstable_cache` con tag `projects` ([`lib/content/projects.ts`](../lib/content/projects.ts)).
+- **Site / skills / about:** caché en memoria del proceso entre lecturas.
+- **Development:** `shouldReloadContentFromDisk()` desactiva esas cachés; mensajes se leen con `fs` en [`i18n/request.ts`](../i18n/request.ts).
+- **Admin local:** `POST /api/admin/revalidate` invalida tag y rutas; ver [17-portfolio-admin-app.md](./17-portfolio-admin-app.md).

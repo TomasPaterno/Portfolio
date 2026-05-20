@@ -1,5 +1,6 @@
 "use client";
 
+import { Children, isValidElement, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { staggerContainer, staggerItem } from "@/lib/animations/variants";
 import { viewportOnce } from "@/lib/animations/transitions";
@@ -9,7 +10,7 @@ import { cn } from "@/lib/utils";
 type StaggerChildrenProps = {
   className?: string;
   childClassName?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export function StaggerChildren({
@@ -31,17 +32,15 @@ export function StaggerChildren({
       viewport={viewportOnce}
       variants={staggerContainer}
     >
-      {Array.isArray(children)
-        ? children.map((child, i) => (
-            <motion.div
-              key={i}
-              className={cn(childClassName)}
-              variants={staggerItem}
-            >
-              {child}
-            </motion.div>
-          ))
-        : children}
+      {Children.map(children, (child, i) => (
+        <motion.div
+          key={isValidElement(child) ? (child.key ?? i) : i}
+          className={cn(childClassName)}
+          variants={staggerItem}
+        >
+          {child}
+        </motion.div>
+      ))}
     </motion.div>
   );
 }

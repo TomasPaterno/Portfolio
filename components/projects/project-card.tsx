@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import type { Locale } from "@/i18n/routing";
+import { parseLocale, routing } from "@/i18n/routing";
 import { Link } from "@/navigation";
 import type { Project } from "@/types/project";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +20,7 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project, priority = false }: ProjectCardProps) {
   const t = useTranslations("status");
-  const locale = useLocale() as Locale;
+  const locale = parseLocale(useLocale()) ?? routing.defaultLocale;
   const reduced = useReducedMotion();
 
   const card = (

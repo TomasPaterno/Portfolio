@@ -3,13 +3,13 @@
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "@/navigation";
 import { Link } from "@/navigation";
-import type { Locale } from "@/i18n/routing";
+import { parseLocale, routing, type Locale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
-const locales: Locale[] = ["es", "en"];
+const locales = [...routing.locales] satisfies Locale[];
 
 export function LanguageSwitcher() {
-  const locale = useLocale() as Locale;
+  const locale = parseLocale(useLocale()) ?? routing.defaultLocale;
   const pathname = usePathname();
   const t = useTranslations("language");
 

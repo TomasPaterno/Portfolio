@@ -2,7 +2,6 @@ import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { getSiteConfig } from "@/config/site";
 import { getAllProjects, getProjectSlugs } from "@/lib/content/projects";
-import type { Locale } from "@/i18n/routing";
 
 const staticPaths = ["", "/projects", "/about", "/contact"];
 
@@ -13,7 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [];
 
   for (const locale of routing.locales) {
-    const projects = await getAllProjects(locale as Locale);
+    const projects = await getAllProjects(locale);
     const projectBySlug = new Map(projects.map((p) => [p.slug, p]));
 
     for (const path of staticPaths) {

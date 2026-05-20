@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { routing, type Locale } from "@/i18n/routing";
+import { parseLocale, routing } from "@/i18n/routing";
 import { getSiteConfig } from "@/config/site";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -24,7 +24,10 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const site = getSiteConfig(locale as Locale);
+  const loc = parseLocale(locale);
+  if (!loc) notFound();
+
+  const site = getSiteConfig(loc);
 
   return {
     metadataBase: new URL(site.url),
@@ -59,19 +62,20 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
+  const loc = parseLocale(locale);
 
-  if (!routing.locales.includes(locale as Locale)) {
+  if (!loc) {
     notFound();
   }
 
-  setRequestLocale(locale);
+  setRequestLocale(loc);
   const messages = await getMessages();
-  const site = getSiteConfig(locale as Locale);
+  const site = getSiteConfig(loc);
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <LocaleHtmlLang locale={locale as Locale} />
-      <JsonLdPerson site={site} locale={locale as Locale} />
+      <LocaleHtmlLang locale={loc} />
+      <JsonLdPerson site={site} locale={loc} />
       <SiteHeader siteName={site.name} navigation={site.navigation} />
       <main className="flex-1 pt-16">{children}</main>
       <SiteFooter />

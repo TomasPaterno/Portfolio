@@ -7,3 +7,8 @@ export const routing = defineRouting({
 });
 
 export type Locale = (typeof routing.locales)[number];
+
+export function parseLocale(locale: string | undefined): Locale | null {
+  if (!locale) return null;
+  return routing.locales.includes(locale as Locale) ? (locale as Locale) : null;
+}

@@ -31,7 +31,7 @@ export function ProjectGallery({ images, title }: ProjectGalleryProps) {
           <div className="grid grid-cols-4 gap-3 sm:grid-cols-6">
             {images.map((src, i) => (
               <button
-                key={src}
+                key={`${src}-${i}`}
                 type="button"
                 onClick={() => setActive(i)}
                 className={cn(

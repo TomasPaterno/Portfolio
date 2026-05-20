@@ -44,6 +44,7 @@ Documentación técnica del portfolio Next.js bilingüe (ES/EN), diseñada para:
 | 14 | [Analysis, debt & refactors](./14-analysis-debt-refactors.md) | Deuda resuelta + backlog |
 | 15 | [Migration guide](./15-migration-guide.md) | Desde tags `{es,en}` y config TS |
 | 16 | [Content validation](./16-content-validation.md) | `validate:content`, reglas CI |
+| 17 | [PortfolioAdminApp](./17-portfolio-admin-app.md) | Editor local, preview, caché dev |
 
 ## Esquemas JSON (referencia CMS)
 
@@ -63,9 +64,9 @@ flowchart TB
   subgraph storage [Almacenamiento actual]
     Messages[messages/es.json + en.json]
     Projects[content/projects/*.json|mdx]
-    SiteCfg[config/site.ts]
-    About[content/about.ts]
-    Skills[config/skills.ts]
+    SiteCfg[content/site.json]
+    About[content/about.json]
+    Skills[content/skills.json]
     Public[public/images]
   end
 
@@ -77,7 +78,7 @@ flowchart TB
     Pages[app/[locale]/*]
   end
 
-  Admin -.->|futuro API| storage
+  Admin -->|filesystem + revalidate API| storage
   Git --> storage
   storage --> Loader
   storage --> Intl
@@ -99,9 +100,10 @@ flowchart TB
 | Quiero cambiar… | Archivo(s) hoy | Doc |
 |-----------------|----------------|-----|
 | Texto de un botón | `messages/*.json` | [12](./12-editable-parameters-catalog.md#ui-messages) |
-| Nombre / bio hero | `config/site.ts` | [12](./12-editable-parameters-catalog.md#site-profile) |
+| Nombre / bio hero | `content/site.json` | [12](./12-editable-parameters-catalog.md#site-profile) |
 | Un proyecto | `content/projects/` | [04](./04-projects-system.md) |
-| Skills en home | `config/skills.ts` | [12](./12-editable-parameters-catalog.md#skills) |
-| Timeline About | `content/about.ts` | [12](./12-editable-parameters-catalog.md#about) |
+| Skills en home | `content/skills.json` | [12](./12-editable-parameters-catalog.md#skills) |
+| Timeline About | `content/about.json` | [12](./12-editable-parameters-catalog.md#about) |
+| Todo vía UI local | PortfolioAdminApp :3001 | [17](./17-portfolio-admin-app.md) |
 | Color acento | `app/globals.css` | [06](./06-theme-animation.md) |
 | URL producción | `NEXT_PUBLIC_SITE_URL` | [08](./08-seo-metadata.md) |

@@ -37,7 +37,7 @@ export function ProjectsFilter({ projects }: ProjectsFilterProps) {
     });
   }, [projects, status, tagId]);
 
-  if (!filtered.length) {
+  if (!projects.length) {
     return (
       <p className="text-center text-muted-foreground">
         {t("empty")}{" "}
@@ -85,7 +85,11 @@ export function ProjectsFilter({ projects }: ProjectsFilterProps) {
           </FilterChip>
         ))}
       </div>
-      <ProjectGrid projects={filtered} />
+      {filtered.length ? (
+        <ProjectGrid projects={filtered} />
+      ) : (
+        <p className="text-center text-muted-foreground">{t("noMatches")}</p>
+      )}
     </div>
   );
 }

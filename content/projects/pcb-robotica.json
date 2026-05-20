@@ -1,0 +1,31 @@
+{
+  "title": {
+    "es": "PCB Robotica",
+    "en": "Robotics PCB"
+  },
+  "description": {
+    "es": "Descripción del proyecto.",
+    "en": "Project description."
+  },
+  "shortDescription": {
+    "es": "Resumen breve.",
+    "en": "Short summary."
+  },
+  "tagIds": [
+    "aerospace",
+    "iot",
+    "fpga"
+  ],
+  "technologies": [],
+  "coverImage": "/images/projects/pcb-robotica/pcb.webp",
+  "galleryImages": [],
+  "featured": true,
+  "date": "2026-05-20",
+  "status": "in-progress",
+  "markdownContent": {
+    "es": "## Detalle\n\nEscribe el caso de estudio en español.",
+    "en": "## Details\n\nWrite the case study in English."
+  },
+  "technicalDetails": [],
+  "metrics": []
+}

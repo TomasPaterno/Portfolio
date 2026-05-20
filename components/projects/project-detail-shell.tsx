@@ -1,37 +1,38 @@
 "use client";
 
-import type { Project } from "@/types/project";
-import { ProjectContent } from "@/components/projects/project-content";
-import { ProjectSidebar } from "@/components/projects/project-sidebar";
+import { useMemo, type ReactNode } from "react";
+import {
+  ProjectSidebar,
+  type ProjectSidebarProject,
+} from "@/components/projects/project-sidebar";
 import { useSectionSpy } from "@/hooks/use-section-spy";
-
-const sectionIds = [
-  "overview",
-  "technical",
-  "metrics",
-  "gallery",
-  "writeup",
-] as const;
+import type { ProjectSectionId } from "@/lib/projects/sections";
 
 type ProjectDetailShellProps = {
-  project: Project;
+  project: ProjectSidebarProject;
+  visibleSections: ProjectSectionId[];
+  children: ReactNode;
 };
 
-export function ProjectDetailShell({ project }: ProjectDetailShellProps) {
-  const visibleIds = sectionIds.filter((id) => {
-    if (id === "technical") return project.technicalDetails.length > 0;
-    if (id === "metrics") return project.metrics.length > 0;
-    if (id === "gallery") return project.galleryImages.length > 0;
-    if (id === "writeup") return !!project.markdownContent?.trim();
-    return true;
-  });
-
-  const activeSection = useSectionSpy([...visibleIds]);
+export function ProjectDetailShell({
+  project,
+  visibleSections,
+  children,
+}: ProjectDetailShellProps) {
+  const visibleIds = useMemo(
+    () => visibleSections,
+    [visibleSections],
+  );
+  const activeSection = useSectionSpy(visibleIds);
 
   return (
     <div className="grid gap-12 lg:grid-cols-[1fr_280px]">
-      <ProjectContent project={project} />
-      <ProjectSidebar project={project} activeSection={activeSection} />
+      {children}
+      <ProjectSidebar
+        project={project}
+        visibleSections={visibleIds}
+        activeSection={activeSection}
+      />
     </div>
   );
 }

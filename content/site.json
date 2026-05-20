@@ -1,44 +1,54 @@
 {
   "name": "Tomás Paternó",
   "title": {
-    "es": "Ingeniero de Sistemas Embebidos",
-    "en": "Embedded Systems Engineer"
+    "es": "Técnico en electrónica",
+    "en": "Electronics technician"
   },
   "description": {
-    "es": "Portfolio de firmware, RTOS, FPGA y sistemas de control para aplicaciones industriales y aeroespaciales.",
-    "en": "Portfolio of firmware, RTOS, FPGA, and control systems for industrial and aerospace applications."
+    "es": "Portfolio completo de mis proyectos y experiencia en el rubro de la electrónica, programación y robótica.",
+    "en": "Complete portfolio of my projects and experience in the field of electronics, programming and robotics."
   },
   "url": "https://tomas-paterno.dev",
   "ogImage": "/og.png",
   "keywords": {
     "es": [
-      "sistemas embebidos",
-      "firmware",
-      "RTOS",
-      "FPGA",
-      "STM32",
-      "control de vuelo"
+      "electrónica",
+      "programación",
+      "robótica"
     ],
     "en": [
-      "embedded systems",
-      "firmware",
-      "RTOS",
-      "FPGA",
-      "STM32",
-      "flight control"
+      "electronics",
+      "programming",
+      "robotics"
     ]
   },
-  "email": "hello@tomas-paterno.dev",
+  "email": "tomaspaterno02@gmail.com",
   "links": {
-    "github": "https://github.com/tomas-paterno",
+    "github": "https://github.com/TomasPaterno",
     "linkedin": "https://linkedin.com/in/tomas-paterno",
-    "email": "mailto:hello@tomas-paterno.dev"
+    "email": "mailto:tomaspaterno02@gmail.com"
   },
   "navigation": [
-    { "href": "/", "labelKey": "home", "enabled": true },
-    { "href": "/projects", "labelKey": "projects", "enabled": true },
-    { "href": "/about", "labelKey": "about", "enabled": true },
-    { "href": "/contact", "labelKey": "contact", "enabled": true }
+    {
+      "href": "/",
+      "labelKey": "home",
+      "enabled": true
+    },
+    {
+      "href": "/projects",
+      "labelKey": "projects",
+      "enabled": true
+    },
+    {
+      "href": "/about",
+      "labelKey": "about",
+      "enabled": true
+    },
+    {
+      "href": "/contact",
+      "labelKey": "contact",
+      "enabled": true
+    }
   ],
   "homeSections": {
     "featuredProjects": true,

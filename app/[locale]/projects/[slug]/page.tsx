@@ -3,10 +3,12 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { routing, type Locale } from "@/i18n/routing";
+import { parseLocale, routing } from "@/i18n/routing";
 import { getSiteConfig } from "@/config/site";
 import { getProjectBySlug, getProjectSlugs } from "@/lib/content/projects";
+import { getVisibleProjectSections } from "@/lib/projects/sections";
 import { ProjectDetailShell } from "@/components/projects/project-detail-shell";
+import { ProjectContent } from "@/components/projects/project-content";
 import { JsonLdProject } from "@/components/seo/json-ld-project";
 import { SectionWrapper } from "@/components/layout/section-wrapper";
 import { Button } from "@/components/ui/button";
@@ -27,8 +29,11 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
-  const project = await getProjectBySlug(slug, locale as Locale);
-  const t = await getTranslations({ locale, namespace: "projects" });
+  const loc = parseLocale(locale);
+  if (!loc) notFound();
+
+  const project = await getProjectBySlug(slug, loc);
+  const t = await getTranslations({ locale: loc, namespace: "projects" });
 
   if (!project) return { title: t("notFoundTitle") };
 
@@ -45,7 +50,7 @@ export async function generateMetadata({
       title,
       description,
       images: [{ url: project.coverImage, alt: title }],
-      locale: locale === "es" ? "es_AR" : "en_US",
+      locale: loc === "es" ? "es_AR" : "en_US",
     },
     alternates: {
       languages: {
@@ -58,18 +63,31 @@ export async function generateMetadata({
 
 export default async function ProjectDetailPage({ params }: PageProps) {
   const { locale, slug } = await params;
-  setRequestLocale(locale);
+  const loc = parseLocale(locale);
+  if (!loc) notFound();
+
+  setRequestLocale(loc);
   const t = await getTranslations("projects");
-  const project = await getProjectBySlug(slug, locale as Locale);
-  const site = getSiteConfig(locale as Locale);
+  const project = await getProjectBySlug(slug, loc);
+  const site = getSiteConfig(loc);
 
   if (!project) {
     notFound();
   }
 
+  const sidebarProject = {
+    status: project.status,
+    date: project.date,
+    githubUrl: project.githubUrl,
+    demoUrl: project.demoUrl,
+    technologies: project.technologies,
+    tags: project.tags,
+  };
+  const visibleSections = getVisibleProjectSections(project);
+
   return (
     <>
-      <JsonLdProject project={project} site={site} locale={locale} />
+      <JsonLdProject project={project} site={site} locale={loc} />
       <div className="relative border-b border-border/60">
         <div className="relative mx-auto max-w-6xl px-6 pt-8 pb-12">
           <Button asChild variant="ghost" size="sm" className="mb-8 -ml-2">
@@ -104,7 +122,12 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       </div>
 
       <SectionWrapper className="pt-12">
-        <ProjectDetailShell project={project} />
+        <ProjectDetailShell
+          project={sidebarProject}
+          visibleSections={visibleSections}
+        >
+          <ProjectContent project={project} />
+        </ProjectDetailShell>
       </SectionWrapper>
     </>
   );

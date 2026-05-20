@@ -4,7 +4,8 @@ import { getAllProjects } from "@/lib/content/projects";
 import { ProjectsFilter } from "@/components/projects/projects-filter";
 import { SectionWrapper } from "@/components/layout/section-wrapper";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
-import type { Locale } from "@/i18n/routing";
+import { parseLocale } from "@/i18n/routing";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -12,7 +13,10 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "projects" });
+  const loc = parseLocale(locale);
+  if (!loc) notFound();
+
+  const t = await getTranslations({ locale: loc, namespace: "projects" });
   return {
     title: t("title"),
     description: t("description"),
@@ -21,9 +25,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectsPage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
+  const loc = parseLocale(locale);
+  if (!loc) notFound();
+
+  setRequestLocale(loc);
   const t = await getTranslations("projects");
-  const projects = await getAllProjects(locale as Locale);
+  const projects = await getAllProjects(loc);
 
   return (
     <SectionWrapper className="pt-8">

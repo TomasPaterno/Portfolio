@@ -36,6 +36,34 @@ getProjectSlugs() → filenames
 
 ---
 
+## 17.5 PortfolioAdminApp (implementado — fase local)
+
+Editor Next.js en `PortfolioAdminApp/` (puerto 3001). Escribe directamente en el repo del sitio vía `PORTFOLIO_ROOT`.
+
+| Method | Path (admin app) | Acción |
+|--------|------------------|--------|
+| GET/PUT | `/api/content/projects/[slug]` | Leer / guardar proyecto |
+| POST | `/api/content/projects` | Crear `{slug}.json` |
+| GET/PUT | `/api/content/site` | Perfil |
+| GET/PUT | `/api/content/about` | About |
+| GET/PUT | `/api/content/skills` | Skills |
+| GET/PUT | `/api/content/registries/tags` | Tags |
+| GET/PUT | `/api/content/messages/[locale]` | Mensajes UI |
+| POST | `/api/assets/upload` | Imagen de proyecto |
+| POST | `/api/validate` | Ejecuta `validate:content` en Portfolio |
+
+**Portfolio — revalidación preview:**
+
+| Method | Path | Acción |
+|--------|------|--------|
+| POST | `/api/admin/revalidate` | `clearContentCache()` + `revalidateTag("projects")` + paths |
+
+Tras cada guardado, el admin llama este endpoint. En `development`, los loaders del sitio omiten caché de módulo y `unstable_cache` para proyectos.
+
+Ver [17-portfolio-admin-app.md](./17-portfolio-admin-app.md).
+
+---
+
 ## 18. Future CMS integration architecture
 
 ### 18.1 Target topology

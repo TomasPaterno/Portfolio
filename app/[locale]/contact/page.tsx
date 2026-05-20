@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Code2, Mail, Network } from "lucide-react";
 import { getSiteConfig } from "@/config/site";
@@ -13,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Link } from "@/navigation";
-import type { Locale } from "@/i18n/routing";
+import { parseLocale } from "@/i18n/routing";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -21,8 +22,11 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const site = getSiteConfig(locale as Locale);
-  const t = await getTranslations({ locale, namespace: "contact" });
+  const loc = parseLocale(locale);
+  if (!loc) notFound();
+
+  const site = getSiteConfig(loc);
+  const t = await getTranslations({ locale: loc, namespace: "contact" });
 
   return {
     title: t("metaTitle"),
@@ -32,9 +36,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ContactPage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
+  const loc = parseLocale(locale);
+  if (!loc) notFound();
+
+  setRequestLocale(loc);
   const t = await getTranslations("contact");
-  const site = getSiteConfig(locale as Locale);
+  const site = getSiteConfig(loc);
 
   return (
     <SectionWrapper className="pt-8" narrow>

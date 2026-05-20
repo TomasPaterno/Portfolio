@@ -1,30 +1,15 @@
 import fs from "fs/promises";
 import path from "path";
-import { z } from "zod";
 import type { Locale } from "@/i18n/routing";
+import {
+  shouldReloadContentFromDisk,
+  getAboutRawCache,
+  setAboutRawCache,
+} from "@/lib/content/content-cache";
+import { aboutSchema, type AboutRaw } from "@/lib/content/schemas";
 import { pickLocalized } from "@/lib/i18n/localized";
 
-const localizedStringSchema = z.object({
-  es: z.string(),
-  en: z.string(),
-});
-
-const timelineItemSchema = z.object({
-  year: localizedStringSchema,
-  title: localizedStringSchema,
-  description: localizedStringSchema,
-});
-
-const valueItemSchema = z.object({
-  title: localizedStringSchema,
-  description: localizedStringSchema,
-});
-
-const aboutSchema = z.object({
-  intro: localizedStringSchema,
-  timeline: z.array(timelineItemSchema),
-  values: z.array(valueItemSchema),
-});
+export { aboutSchema, type AboutRaw } from "@/lib/content/schemas";
 
 export type AboutContent = {
   intro: string;
@@ -32,14 +17,14 @@ export type AboutContent = {
   values: Array<{ title: string; description: string }>;
 };
 
-let cache: z.infer<typeof aboutSchema> | null = null;
-
-async function loadAboutRaw() {
-  if (cache) return cache;
+async function loadAboutRaw(): Promise<AboutRaw> {
+  const cached = getAboutRawCache();
+  if (cached && !shouldReloadContentFromDisk()) return cached;
   const filePath = path.join(process.cwd(), "content", "about.json");
   const raw = await fs.readFile(filePath, "utf-8");
-  cache = aboutSchema.parse(JSON.parse(raw));
-  return cache;
+  const parsed = aboutSchema.parse(JSON.parse(raw));
+  setAboutRawCache(parsed);
+  return parsed;
 }
 
 export async function getAboutContent(locale: Locale): Promise<AboutContent> {

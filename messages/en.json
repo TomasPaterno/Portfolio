@@ -5,36 +5,37 @@
     "about": "About",
     "contact": "Contact",
     "getInTouch": "Get in touch",
-    "embeddedTag": "/ embedded",
+    "embeddedTag": "/ ",
     "menu": "Navigation"
   },
   "hero": {
-    "eyebrow": "Embedded · Robotics · Electronics",
+    "eyebrow": "Electronics · Programming · Robotics",
     "viewProjects": "View projects",
     "aboutMe": "About me"
   },
   "featured": {
-    "eyebrow": "Selected work",
+    "eyebrow": "",
     "title": "Featured projects",
-    "description": "Flight controllers, sensor hubs, and signal processing — engineered for reliability under real-world constraints.",
+    "description": "The best projects I have worked on, with the ones I feel most proud of.",
     "allProjects": "All projects"
   },
   "skills": {
     "eyebrow": "Capabilities",
     "title": "Engineering stack",
-    "description": "From bare-metal firmware to flight-ready control loops — tools and platforms I use to ship reliable hardware systems."
+    "description": "The technologies I use to build my projects."
   },
   "cta": {
     "eyebrow": "Collaborate",
     "title": "Building something precise?",
-    "description": "Open to firmware, robotics, and hardware engineering roles — or technical collaborations on ambitious embedded products.",
+    "description": "Open to electronics, PCB design, programming, and robotics roles — or technical collaborations on ambitious embedded products.",
     "button": "Start a conversation"
   },
   "projects": {
     "eyebrow": "Portfolio",
     "title": "Projects",
-    "description": "Firmware, flight control, sensor networks, and FPGA signal chains — documented with specs, metrics, and architecture notes.",
+    "description": "Electronics, programming, robotics, and PCB design — documented with specs, metrics, and architecture notes.",
     "empty": "No projects yet. Add a JSON file to content/projects/.",
+    "noMatches": "No projects match these filters.",
     "filterAll": "All",
     "backToProjects": "All projects",
     "notFoundTitle": "Project not found",
@@ -74,14 +75,14 @@
     "metaDescription": "Get in touch with {name}.",
     "eyebrow": "Contact",
     "title": "Let's connect",
-    "intro": "Interested in embedded engineering roles, consulting, or technical collaboration? Reach out directly — I typically respond within a few days.",
+    "intro": "Interested in electronics, PCB design, programming, or robotics roles — or technical collaborations on ambitious embedded products? Reach out directly — I typically respond within a few days.",
     "emailTitle": "Email",
     "emailDescription": "Best for detailed inquiries",
     "socialTitle": "Social",
     "socialDescription": "Code and professional profile",
     "github": "GitHub",
     "linkedin": "LinkedIn",
-    "formNote": "Prefer a form? Connect Formspree, Resend, or Vercel contact API by replacing this section."
+    "formNote": ""
   },
   "footer": {
     "builtWith": "Built with Next.js"

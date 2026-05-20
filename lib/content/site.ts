@@ -1,49 +1,15 @@
 import fs from "fs/promises";
 import path from "path";
-import { z } from "zod";
 import type { Locale } from "@/i18n/routing";
+import {
+  shouldReloadContentFromDisk,
+  getSiteRawCache,
+  setSiteRawCache,
+} from "@/lib/content/content-cache";
+import { siteSchema, type SiteConfigRaw } from "@/lib/content/schemas";
 import { pickLocalized } from "@/lib/i18n/localized";
 
-const localizedStringSchema = z.object({
-  es: z.string(),
-  en: z.string(),
-});
-
-const localizedStringArraySchema = z.object({
-  es: z.array(z.string()),
-  en: z.array(z.string()),
-});
-
-const navigationItemSchema = z.object({
-  href: z.string(),
-  labelKey: z.string(),
-  enabled: z.boolean().default(true),
-});
-
-export const siteSchema = z.object({
-  name: z.string(),
-  title: localizedStringSchema,
-  description: localizedStringSchema,
-  url: z.string().url(),
-  ogImage: z.string(),
-  keywords: localizedStringArraySchema,
-  email: z.string().email(),
-  links: z.object({
-    github: z.string().url(),
-    linkedin: z.string().url(),
-    email: z.string(),
-  }),
-  navigation: z.array(navigationItemSchema),
-  homeSections: z
-    .object({
-      featuredProjects: z.boolean().default(true),
-      skillsMarquee: z.boolean().default(true),
-      ctaStrip: z.boolean().default(true),
-    })
-    .optional(),
-});
-
-export type SiteConfigRaw = z.infer<typeof siteSchema>;
+export { siteSchema, type SiteConfigRaw } from "@/lib/content/schemas";
 
 export type SiteConfig = {
   name: string;
@@ -94,14 +60,14 @@ export function resolveSiteConfig(
   };
 }
 
-let rawCache: SiteConfigRaw | null = null;
-
 export async function loadSiteRaw(): Promise<SiteConfigRaw> {
-  if (rawCache) return rawCache;
+  const cached = getSiteRawCache();
+  if (cached && !shouldReloadContentFromDisk()) return cached;
   const filePath = path.join(process.cwd(), "content", "site.json");
   const raw = await fs.readFile(filePath, "utf-8");
-  rawCache = siteSchema.parse(JSON.parse(raw));
-  return rawCache;
+  const parsed = siteSchema.parse(JSON.parse(raw));
+  setSiteRawCache(parsed);
+  return parsed;
 }
 
 export async function getSiteConfig(locale: Locale): Promise<SiteConfig> {

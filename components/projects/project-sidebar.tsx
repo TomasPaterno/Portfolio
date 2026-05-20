@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import type { Locale } from "@/i18n/routing";
+import { parseLocale, routing } from "@/i18n/routing";
 import { Code2, ExternalLink } from "lucide-react";
 import { Link } from "@/navigation";
 import type { Project } from "@/types/project";
@@ -10,34 +10,31 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/lib/utils";
 import { cn } from "@/lib/utils";
+import {
+  type ProjectSectionId,
+} from "@/lib/projects/sections";
 
-const sectionIds = [
-  "overview",
-  "technical",
-  "metrics",
-  "gallery",
-  "writeup",
-] as const;
+export type ProjectSidebarProject = Pick<
+  Project,
+  "status" | "date" | "githubUrl" | "demoUrl" | "technologies" | "tags"
+>;
 
 type ProjectSidebarProps = {
-  project: Project;
+  project: ProjectSidebarProject;
+  visibleSections: ProjectSectionId[];
   activeSection?: string;
 };
 
-export function ProjectSidebar({ project, activeSection }: ProjectSidebarProps) {
+export function ProjectSidebar({
+  project,
+  visibleSections,
+  activeSection,
+}: ProjectSidebarProps) {
   const t = useTranslations("projectDetail");
   const tStatus = useTranslations("status");
-  const locale = useLocale() as Locale;
+  const locale = parseLocale(useLocale()) ?? routing.defaultLocale;
 
-  const visibleSections = sectionIds.filter((id) => {
-    if (id === "technical") return project.technicalDetails.length > 0;
-    if (id === "metrics") return project.metrics.length > 0;
-    if (id === "gallery") return project.galleryImages.length > 0;
-    if (id === "writeup") return !!project.markdownContent?.trim();
-    return true;
-  });
-
-  const sectionLabels: Record<(typeof sectionIds)[number], string> = {
+  const sectionLabels: Record<ProjectSectionId, string> = {
     overview: t("overview"),
     technical: t("technical"),
     metrics: t("metrics"),

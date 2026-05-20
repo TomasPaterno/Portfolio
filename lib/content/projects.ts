@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { unstable_cache } from "next/cache";
 import type { Locale } from "@/i18n/routing";
+import { shouldReloadContentFromDisk } from "@/lib/content/content-cache";
 import {
   projectFrontmatterSchema,
   type ProjectFrontmatterRaw,
@@ -45,10 +46,13 @@ async function loadMdxProject(
   const raw = await fs.readFile(filePath, "utf-8");
   const { data, content } = matter(raw);
   const parsed = projectFrontmatterSchema.parse(data);
+  const body = content.trim();
 
   const withBody: ProjectFrontmatterRaw = {
     ...parsed,
-    ...(parsed.markdownContent || !content.trim() ? {} : {}),
+    ...(parsed.markdownContent || !body
+      ? {}
+      : { markdownContent: { es: body, en: body } }),
   };
 
   return toProject(withBody, filename, locale);
@@ -83,6 +87,9 @@ async function loadAllProjectsUncached(locale: Locale): Promise<Project[]> {
 }
 
 export async function getAllProjects(locale: Locale): Promise<Project[]> {
+  if (shouldReloadContentFromDisk()) {
+    return loadAllProjectsUncached(locale);
+  }
   return unstable_cache(
     () => loadAllProjectsUncached(locale),
     ["projects", locale],

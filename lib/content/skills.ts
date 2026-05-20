@@ -1,25 +1,15 @@
 import fs from "fs/promises";
 import path from "path";
-import { z } from "zod";
 import type { Locale } from "@/i18n/routing";
+import {
+  shouldReloadContentFromDisk,
+  getSkillsRawCache,
+  setSkillsRawCache,
+} from "@/lib/content/content-cache";
+import { skillsSchema, type SkillsRaw } from "@/lib/content/schemas";
 import { pickLocalized } from "@/lib/i18n/localized";
 
-const localizedStringSchema = z.object({
-  es: z.string(),
-  en: z.string(),
-});
-
-const skillCategorySchema = z.object({
-  id: z.string(),
-  title: localizedStringSchema,
-  skills: z.array(localizedStringSchema),
-});
-
-export const skillsSchema = z.object({
-  categories: z.array(skillCategorySchema),
-});
-
-export type SkillsRaw = z.infer<typeof skillsSchema>;
+export { skillsSchema, type SkillsRaw } from "@/lib/content/schemas";
 
 export type SkillCategory = {
   id: string;
@@ -38,14 +28,14 @@ export function resolveSkillCategories(
   }));
 }
 
-let cache: SkillsRaw | null = null;
-
 export async function loadSkillsRaw(): Promise<SkillsRaw> {
-  if (cache) return cache;
+  const cached = getSkillsRawCache();
+  if (cached && !shouldReloadContentFromDisk()) return cached;
   const filePath = path.join(process.cwd(), "content", "skills.json");
   const raw = await fs.readFile(filePath, "utf-8");
-  cache = skillsSchema.parse(JSON.parse(raw));
-  return cache;
+  const parsed = skillsSchema.parse(JSON.parse(raw));
+  setSkillsRawCache(parsed);
+  return parsed;
 }
 
 export async function getSkillCategoriesAsync(

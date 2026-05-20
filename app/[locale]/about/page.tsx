@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getAboutContent } from "@/lib/content/about";
 import { getSiteConfig } from "@/config/site";
 import { SectionWrapper } from "@/components/layout/section-wrapper";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
 import { StaggerChildren } from "@/components/motion/stagger-children";
-import type { Locale } from "@/i18n/routing";
+import { parseLocale } from "@/i18n/routing";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -13,8 +14,11 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const site = getSiteConfig(locale as Locale);
-  const t = await getTranslations({ locale, namespace: "about" });
+  const loc = parseLocale(locale);
+  if (!loc) notFound();
+
+  const site = getSiteConfig(loc);
+  const t = await getTranslations({ locale: loc, namespace: "about" });
 
   return {
     title: t("metaTitle"),
@@ -27,8 +31,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function AboutPage({ params }: Props) {
   const { locale } = await params;
-  const loc = locale as Locale;
-  setRequestLocale(locale);
+  const loc = parseLocale(locale);
+  if (!loc) notFound();
+
+  setRequestLocale(loc);
   const t = await getTranslations("about");
   const about = await getAboutContent(loc);
 
