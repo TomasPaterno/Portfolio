@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0.35"/>
+      <stop offset="100%" style="stop-color:#09090b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" fill="#09090b"/>
+  <rect width="1200" height="750" fill="url(#g)"/>
+  <text x="600" y="380" fill="#fafafa" font-family="monospace" font-size="28" text-anchor="middle" opacity="0.9">Flight Controller</text>
+</svg>

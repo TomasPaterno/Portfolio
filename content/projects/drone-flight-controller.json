@@ -1,0 +1,29 @@
+{
+  "title": "Autonomous Drone Flight Controller",
+  "description": "Custom STM32-based flight controller with sensor fusion, PID attitude control, and MAVLink telemetry. Designed for sub-250g racing platforms with deterministic 1 kHz control loop timing.",
+  "shortDescription": "1 kHz STM32 flight stack with IMU fusion and MAVLink telemetry.",
+  "tags": ["aerospace", "control-systems", "stm32"],
+  "technologies": ["STM32F4", "FreeRTOS", "C", "MAVLink", "PID"],
+  "coverImage": "/images/projects/drone-flight-controller/cover.svg",
+  "galleryImages": [
+    "/images/projects/drone-flight-controller/gallery-1.svg",
+    "/images/projects/drone-flight-controller/gallery-2.svg"
+  ],
+  "githubUrl": "https://github.com",
+  "demoUrl": "https://example.com",
+  "featured": true,
+  "date": "2025-11-15",
+  "status": "completed",
+  "markdownContent": "## Architecture\n\nThe firmware runs a **1 kHz inner attitude loop** on the high-priority timer ISR, with navigation and telemetry tasks scheduled on FreeRTOS at lower priority.\n\n### Key modules\n\n- **IMU driver** — SPI DMA reads at 2 kHz, downsampled with FIR filtering\n- **Attitude estimator** — complementary filter + gyro bias estimation\n- **Motor mixer** — X-quad mapping with slew-rate limiting\n\n### Validation\n\nBench-tested with HIL simulation before field flights. Logged loop jitter **< 15 µs** p99 on STM32F405 at 168 MHz.",
+  "technicalDetails": [
+    { "label": "MCU", "value": "STM32F405 @ 168 MHz" },
+    { "label": "IMU", "value": "ICM-42688-P via SPI DMA" },
+    { "label": "RTOS", "value": "FreeRTOS 10.x" },
+    { "label": "Control rate", "value": "1 kHz inner loop" }
+  ],
+  "metrics": [
+    { "label": "Loop jitter (p99)", "value": "< 15", "unit": "µs" },
+    { "label": "Attitude hold error", "value": "< 1.2", "unit": "°" },
+    { "label": "Boot to armed", "value": "420", "unit": "ms" }
+  ]
+}

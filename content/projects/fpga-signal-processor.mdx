@@ -1,0 +1,54 @@
+---
+title: FPGA Real-Time Signal Processor
+description: Xilinx Artix-7 pipeline for high-throughput IQ sample processing with AXI-Stream interfaces and host DMA over PCIe.
+shortDescription: Artix-7 DSP pipeline with AXI-Stream and PCIe DMA.
+tags:
+  - fpga
+  - dsp
+  - aerospace
+technologies:
+  - Verilog
+  - Vivado
+  - Artix-7
+  - AXI-Stream
+  - Python
+coverImage: /images/projects/fpga-signal-processor/cover.svg
+galleryImages: []
+githubUrl: https://github.com
+featured: true
+date: "2025-08-01"
+status: completed
+technicalDetails:
+  - label: Device
+    value: XC7A200T
+  - label: Clock
+    value: 200 MHz DSP core
+  - label: Throughput
+    value: 1.2 GS/s complex samples
+metrics:
+  - label: Latency
+    value: "48"
+    unit: ns
+  - label: DSP slices
+    value: "62%"
+    unit: utilization
+---
+
+## Overview
+
+This project implements a **fixed-point DSP chain** on Artix-7 for real-time IQ processing. The design prioritizes predictable latency and clean AXI-Stream backpressure handling.
+
+## Pipeline stages
+
+1. **Input FIFO** — elastic buffer from ADC interface
+2. **CORDIC rotator** — phase correction per bin
+3. **FIR decimator** — 4× downsample with symmetric coeffs
+4. **Magnitude estimator** — peak detect for trigger logic
+
+## Host integration
+
+A Python control daemon maps PCIe BAR space for register peek/poke and streams capture buffers to disk for offline analysis.
+
+## Lessons learned
+
+Timing closure at 200 MHz required pipeline retiming on the CORDIC stage. Using `(* use_dsp = "yes" *)` attributes cut LUT pressure significantly.

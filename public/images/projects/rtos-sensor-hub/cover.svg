@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750">
+  <rect width="1200" height="750" fill="#09090b"/>
+  <rect width="1200" height="750" fill="url(#g)" opacity="0.5"/>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22d3ee" stop-opacity="0.25"/><stop offset="1" stop-color="#09090b"/></linearGradient></defs>
+  <text x="600" y="380" fill="#fafafa" font-family="monospace" font-size="28" text-anchor="middle">RTOS Sensor Hub</text>
+</svg>

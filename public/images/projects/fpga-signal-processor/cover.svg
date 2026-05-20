@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750">
+  <rect width="1200" height="750" fill="#09090b"/>
+  <circle cx="600" cy="375" r="200" fill="none" stroke="#0ea5e9" stroke-opacity="0.2" stroke-width="2"/>
+  <text x="600" y="380" fill="#fafafa" font-family="monospace" font-size="28" text-anchor="middle">FPGA Signal Processor</text>
+</svg>

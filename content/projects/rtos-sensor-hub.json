@@ -1,0 +1,24 @@
+{
+  "title": "Industrial RTOS Sensor Hub",
+  "description": "Multi-sensor edge node aggregating environmental and vibration data over CAN bus. Zephyr RTOS with modular driver architecture and OTA-ready bootloader partition.",
+  "shortDescription": "Zephyr-based CAN sensor hub with OTA bootloader support.",
+  "tags": ["iot", "industrial", "zephyr"],
+  "technologies": ["Zephyr", "CAN", "Rust bindings", "nRF52840"],
+  "coverImage": "/images/projects/rtos-sensor-hub/cover.svg",
+  "galleryImages": [],
+  "githubUrl": "https://github.com",
+  "featured": true,
+  "date": "2026-01-20",
+  "status": "in-progress",
+  "markdownContent": "## Goals\n\nDeploy **50+ nodes** on a factory floor with synchronized sampling and sub-10 ms CAN latency for vibration monitoring.\n\nWork in progress: finalizing OTA signature verification and power profiling for battery-backed nodes.",
+  "technicalDetails": [
+    { "label": "Platform", "value": "nRF52840 + custom carrier" },
+    { "label": "RTOS", "value": "Zephyr 3.x" },
+    { "label": "Bus", "value": "CAN FD @ 2 Mbps" },
+    { "label": "Sensors", "value": "BME680, ADXL345, mic" }
+  ],
+  "metrics": [
+    { "label": "Nodes deployed", "value": "12", "unit": "pilot" },
+    { "label": "Sample rate", "value": "500", "unit": "Hz" }
+  ]
+}
