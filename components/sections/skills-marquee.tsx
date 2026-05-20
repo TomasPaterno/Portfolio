@@ -1,33 +1,37 @@
-"use client";
-
-import { skillCategories } from "@/config/skills";
+import { getTranslations } from "next-intl/server";
+import { getSkillCategories } from "@/config/skills";
 import { SectionWrapper } from "@/components/layout/section-wrapper";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
 import { StaggerChildren } from "@/components/motion/stagger-children";
+import type { Locale } from "@/i18n/routing";
 
-export function SkillsMarquee() {
+type Props = {
+  locale: Locale;
+};
+
+export async function SkillsMarquee({ locale }: Props) {
+  const categories = getSkillCategories(locale);
+  const t = await getTranslations({ locale, namespace: "skills" });
+
   return (
     <SectionWrapper id="skills" className="border-t border-border/40">
       <ScrollReveal>
         <p className="font-mono text-sm uppercase tracking-wider text-primary">
-          Capabilities
+          {t("eyebrow")}
         </p>
         <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
-          Engineering stack
+          {t("title")}
         </h2>
-        <p className="mt-3 max-w-xl text-muted-foreground">
-          From bare-metal firmware to flight-ready control loops — tools and
-          platforms I use to ship reliable hardware systems.
-        </p>
+        <p className="mt-3 max-w-xl text-muted-foreground">{t("description")}</p>
       </ScrollReveal>
 
       <StaggerChildren className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {skillCategories.map((category) => (
+        {categories.map((category) => (
           <div
-            key={category.name}
+            key={category.id}
             className="glass-panel glow-hover rounded-xl p-6"
           >
-            <h3 className="font-mono text-sm text-primary">{category.name}</h3>
+            <h3 className="font-mono text-sm text-primary">{category.title}</h3>
             <ul className="mt-4 flex flex-wrap gap-2">
               {category.skills.map((skill) => (
                 <li

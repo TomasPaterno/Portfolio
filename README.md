@@ -1,94 +1,85 @@
-# Embedded Systems Portfolio
+# Portfolio — Sistemas embebidos
 
-Production-grade Next.js portfolio for firmware, robotics, and electronics engineers. Dark, premium UI with JSON-first project management.
+Portfolio Next.js para ingenieros en firmware, robótica y electrónica. UI premium, contenido en **español e inglés**, proyectos vía JSON/MDX.
 
-## Tech stack
+**Documentación técnica completa (arquitectura + CMS futuro):** [`docs/README.md`](docs/README.md)
 
-- **Next.js** (App Router) + TypeScript
-- **Tailwind CSS v4** + shadcn/ui patterns
-- **Framer Motion** for scroll and hover animations
-- **Zod** content validation
-- **MDX** (optional) via `next-mdx-remote`
+## Idiomas
 
-## Getting started
+- **Por defecto:** español en `/es/...`
+- **Inglés:** `/en/...`
+- Selector **ES | EN** en el header (mantiene la página actual)
+- Visitá `/` → redirección automática a `/es`
+
+## Inicio rápido
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Abrí [http://localhost:3000/es](http://localhost:3000/es).
 
-## Add a new project
+## Validar y construir
 
-1. Create `content/projects/your-project.json` (see [content/projects/README.md](content/projects/README.md))
-2. Add images to `public/images/projects/your-project/`
-3. Optional: set `"featured": true` for the homepage
-
-No code changes required — routes and listings update automatically.
-
-## Customize branding
-
-Edit [`config/site.ts`](config/site.ts):
-
-- `name`, `title`, `description`, `email`
-- `nav` links
-- `social` URLs
-
-Set production URL:
-
-```env
-NEXT_PUBLIC_SITE_URL=https://your-domain.vercel.app
+```bash
+npm run validate:content   # Zod, mensajes, assets, tagIds, MDX
+npm run build              # incluye validación
 ```
 
-## Customize theme
+## Agregar un proyecto (bilingüe)
 
-Edit CSS variables in [`app/globals.css`](app/globals.css):
+1. Definí tags en `content/registries/tags.json` si son nuevos
+2. Creá `content/projects/tu-proyecto.json` con `tagIds`, campos `{ "es", "en" }` (ver [content/projects/README.md](content/projects/README.md))
+3. Imágenes en `public/images/projects/tu-proyecto/`
+4. `"featured": true` para mostrarlo en el inicio
 
-- `--primary` — accent color (cyan by default)
-- `--background`, `--card`, `--border` — surfaces
+Rutas: `/es/projects/tu-proyecto` y `/en/projects/tu-proyecto`.
 
-Skills on the homepage: [`config/skills.ts`](config/skills.ts).
+## Textos de la interfaz
 
-## Add a homepage section
+Editá `messages/es.json` y `messages/en.json` (mismas claves en ambos; sin namespace `meta`).
 
-1. Create `components/sections/your-section.tsx`
-2. Import it in [`app/page.tsx`](app/page.tsx)
+## Contenido editable (JSON)
 
-Use `SectionWrapper`, `ScrollReveal`, and `StaggerChildren` for consistent layout and motion.
+| Archivo | Contenido |
+|---------|-----------|
+| `content/site.json` | Perfil, keywords, links, navegación, toggles del home |
+| `content/about.json` | Intro, timeline, valores |
+| `content/skills.json` | Categorías de skills |
+| `content/registries/tags.json` | Labels de tags por locale |
+| `content/projects/*.json` | Proyectos |
+
+`config/site.ts` y `config/skills.ts` re-exportan loaders (compatibilidad).
+
+```env
+NEXT_PUBLIC_SITE_URL=https://tu-dominio.vercel.app
+```
+
+## Agregar una sección al inicio
+
+1. Componente en `components/sections/`
+2. Flag en `site.json` → `homeSections` y condición en `app/[locale]/page.tsx`
+
+## Estructura
+
+```
+content/
+  site.json, about.json, skills.json
+  registries/tags.json
+  projects/
+app/[locale]/          # rutas con prefijo de idioma
+messages/es.json, en.json
+lib/content/           # loaders + Zod
+scripts/validate-content.ts
+docs/                  # arquitectura y CMS
+```
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Development server |
-| `npm run build` | Production build |
-| `npm run start` | Run production server |
-| `npm run lint` | ESLint |
-| `npm run format` | Prettier |
-| `npm run typecheck` | TypeScript check |
-
-## Deploy to Vercel
-
-1. Push this repo to GitHub
-2. Import the project at [vercel.com/new](https://vercel.com/new)
-3. Framework preset: **Next.js** (auto-detected)
-4. Add environment variable: `NEXT_PUBLIC_SITE_URL` = your production URL
-5. Deploy
-
-Zero custom build configuration required.
-
-## Project structure
-
-```
-app/              # Routes (home, projects, about, contact)
-components/       # UI, layout, sections, motion, projects
-content/projects/ # JSON / MDX project files
-config/           # Site + skills config
-lib/content/      # Schema + project loader
-public/images/    # Static assets
-```
-
-## License
-
-Private portfolio — customize freely for personal use.
+| Script | Descripción |
+|--------|-------------|
+| `npm run dev` | Desarrollo |
+| `npm run validate:content` | Validación de contenido |
+| `npm run build` | Validación + build producción |
+| `npm run typecheck` | TypeScript |

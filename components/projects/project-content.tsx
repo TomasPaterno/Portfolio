@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import type { Project } from "@/types/project";
 import { compileProjectMarkdown } from "@/lib/mdx/compile-mdx";
 import { MetricsBlock } from "@/components/projects/metrics-block";
@@ -10,6 +11,7 @@ type ProjectContentProps = {
 };
 
 export async function ProjectContent({ project }: ProjectContentProps) {
+  const t = await getTranslations("projectDetail");
   const mdxContent = project.markdownContent
     ? await compileProjectMarkdown(project.markdownContent)
     : null;
@@ -19,7 +21,7 @@ export async function ProjectContent({ project }: ProjectContentProps) {
       <section id="overview">
         <ScrollReveal>
           <h2 className="font-mono text-sm uppercase tracking-wider text-primary">
-            Overview
+            {t("overview")}
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
             {project.description}
@@ -44,11 +46,11 @@ export async function ProjectContent({ project }: ProjectContentProps) {
         <section id="technical">
           <ScrollReveal>
             <h2 className="font-mono text-sm uppercase tracking-wider text-primary">
-              Technical specifications
+              {t("technicalTitle")}
             </h2>
           </ScrollReveal>
           <ScrollReveal className="mt-6">
-            <dl className="glass-panel divide-y divide-border rounded-xl overflow-hidden">
+            <dl className="glass-panel divide-y divide-border overflow-hidden rounded-xl">
               {project.technicalDetails.map((row) => (
                 <div
                   key={row.label}
@@ -69,7 +71,7 @@ export async function ProjectContent({ project }: ProjectContentProps) {
         <section id="metrics">
           <ScrollReveal>
             <h2 className="mb-6 font-mono text-sm uppercase tracking-wider text-primary">
-              Results & metrics
+              {t("metricsTitle")}
             </h2>
           </ScrollReveal>
           <MetricsBlock metrics={project.metrics} />
@@ -80,7 +82,7 @@ export async function ProjectContent({ project }: ProjectContentProps) {
         <section id="gallery">
           <ScrollReveal>
             <h2 className="mb-6 font-mono text-sm uppercase tracking-wider text-primary">
-              Gallery
+              {t("gallery")}
             </h2>
           </ScrollReveal>
           <ProjectGallery images={project.galleryImages} title={project.title} />
@@ -91,7 +93,7 @@ export async function ProjectContent({ project }: ProjectContentProps) {
         <section id="writeup">
           <ScrollReveal>
             <h2 className="font-mono text-sm uppercase tracking-wider text-primary">
-              Deep dive
+              {t("deepDive")}
             </h2>
           </ScrollReveal>
           <Separator className="my-6" />

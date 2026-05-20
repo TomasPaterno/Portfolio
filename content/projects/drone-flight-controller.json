@@ -1,8 +1,18 @@
 {
-  "title": "Autonomous Drone Flight Controller",
-  "description": "Custom STM32-based flight controller with sensor fusion, PID attitude control, and MAVLink telemetry. Designed for sub-250g racing platforms with deterministic 1 kHz control loop timing.",
-  "shortDescription": "1 kHz STM32 flight stack with IMU fusion and MAVLink telemetry.",
-  "tags": ["aerospace", "control-systems", "stm32"],
+  "title": {
+    "es": "Controlador de vuelo autónomo",
+    "en": "Autonomous Drone Flight Controller"
+  },
+  "description": {
+    "es": "Controlador de vuelo basado en STM32 con fusión de sensores, control de actitud PID y telemetría MAVLink. Diseñado para plataformas de carreras sub-250g con lazo de control determinístico a 1 kHz.",
+    "en": "Custom STM32-based flight controller with sensor fusion, PID attitude control, and MAVLink telemetry. Designed for sub-250g racing platforms with deterministic 1 kHz control loop timing."
+  },
+  "shortDescription": {
+    "es": "Stack STM32 a 1 kHz con fusión IMU y telemetría MAVLink.",
+    "en": "1 kHz STM32 flight stack with IMU fusion and MAVLink telemetry."
+  },
+  "tagIds": ["aerospace", "control-systems", "stm32"],
+  "updatedAt": "2025-11-20",
   "technologies": ["STM32F4", "FreeRTOS", "C", "MAVLink", "PID"],
   "coverImage": "/images/projects/drone-flight-controller/cover.svg",
   "galleryImages": [
@@ -14,16 +24,43 @@
   "featured": true,
   "date": "2025-11-15",
   "status": "completed",
-  "markdownContent": "## Architecture\n\nThe firmware runs a **1 kHz inner attitude loop** on the high-priority timer ISR, with navigation and telemetry tasks scheduled on FreeRTOS at lower priority.\n\n### Key modules\n\n- **IMU driver** — SPI DMA reads at 2 kHz, downsampled with FIR filtering\n- **Attitude estimator** — complementary filter + gyro bias estimation\n- **Motor mixer** — X-quad mapping with slew-rate limiting\n\n### Validation\n\nBench-tested with HIL simulation before field flights. Logged loop jitter **< 15 µs** p99 on STM32F405 at 168 MHz.",
+  "markdownContent": {
+    "es": "## Arquitectura\n\nEl firmware ejecuta un **lazo interno de actitud a 1 kHz** en la ISR de timer de alta prioridad, con navegación y telemetría en FreeRTOS a menor prioridad.\n\n### Módulos clave\n\n- **Driver IMU** — lecturas SPI DMA a 2 kHz, decimado con filtro FIR\n- **Estimador de actitud** — filtro complementario + estimación de bias del giro\n- **Mixer de motores** — mapeo X-quad con limitación de slew rate\n\n### Validación\n\nProbado en banco con simulación HIL antes de vuelos. Jitter del lazo **< 15 µs** p99 en STM32F405 a 168 MHz.",
+    "en": "## Architecture\n\nThe firmware runs a **1 kHz inner attitude loop** on the high-priority timer ISR, with navigation and telemetry tasks scheduled on FreeRTOS at lower priority.\n\n### Key modules\n\n- **IMU driver** — SPI DMA reads at 2 kHz, downsampled with FIR filtering\n- **Attitude estimator** — complementary filter + gyro bias estimation\n- **Motor mixer** — X-quad mapping with slew-rate limiting\n\n### Validation\n\nBench-tested with HIL simulation before field flights. Logged loop jitter **< 15 µs** p99 on STM32F405 at 168 MHz."
+  },
   "technicalDetails": [
-    { "label": "MCU", "value": "STM32F405 @ 168 MHz" },
-    { "label": "IMU", "value": "ICM-42688-P via SPI DMA" },
-    { "label": "RTOS", "value": "FreeRTOS 10.x" },
-    { "label": "Control rate", "value": "1 kHz inner loop" }
+    {
+      "label": { "es": "MCU", "en": "MCU" },
+      "value": { "es": "STM32F405 @ 168 MHz", "en": "STM32F405 @ 168 MHz" }
+    },
+    {
+      "label": { "es": "IMU", "en": "IMU" },
+      "value": { "es": "ICM-42688-P vía SPI DMA", "en": "ICM-42688-P via SPI DMA" }
+    },
+    {
+      "label": { "es": "RTOS", "en": "RTOS" },
+      "value": { "es": "FreeRTOS 10.x", "en": "FreeRTOS 10.x" }
+    },
+    {
+      "label": { "es": "Tasa de control", "en": "Control rate" },
+      "value": { "es": "Lazo interno 1 kHz", "en": "1 kHz inner loop" }
+    }
   ],
   "metrics": [
-    { "label": "Loop jitter (p99)", "value": "< 15", "unit": "µs" },
-    { "label": "Attitude hold error", "value": "< 1.2", "unit": "°" },
-    { "label": "Boot to armed", "value": "420", "unit": "ms" }
+    {
+      "label": { "es": "Jitter del lazo (p99)", "en": "Loop jitter (p99)" },
+      "value": "< 15",
+      "unit": { "es": "µs", "en": "µs" }
+    },
+    {
+      "label": { "es": "Error de hold de actitud", "en": "Attitude hold error" },
+      "value": "< 1.2",
+      "unit": { "es": "°", "en": "°" }
+    },
+    {
+      "label": { "es": "Boot a armado", "en": "Boot to armed" },
+      "value": "420",
+      "unit": { "es": "ms", "en": "ms" }
+    }
   ]
 }

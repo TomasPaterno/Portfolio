@@ -1,10 +1,10 @@
 /**
- * Re-export of the project schema for documentation and editor hints.
+ * Re-export of the bilingual project schema.
  * @see lib/content/project-schema.ts
  */
 export {
   projectFrontmatterSchema,
   technicalDetailSchema,
   metricSchema,
-  type ProjectFrontmatter,
+  type ProjectFrontmatterRaw,
 } from "@/lib/content/project-schema";

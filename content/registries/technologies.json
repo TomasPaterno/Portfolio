@@ -1,0 +1,18 @@
+{
+  "entries": [
+    "STM32F4",
+    "FreeRTOS",
+    "C",
+    "MAVLink",
+    "PID",
+    "Zephyr",
+    "CAN",
+    "Rust bindings",
+    "nRF52840",
+    "Verilog",
+    "Vivado",
+    "Artix-7",
+    "AXI-Stream",
+    "Python"
+  ]
+}

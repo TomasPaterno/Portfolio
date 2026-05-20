@@ -1,0 +1,10 @@
+{
+  "aerospace": { "es": "aeroespacial", "en": "aerospace" },
+  "control-systems": { "es": "control", "en": "control-systems" },
+  "stm32": { "es": "stm32", "en": "stm32" },
+  "iot": { "es": "iot", "en": "iot" },
+  "industrial": { "es": "industrial", "en": "industrial" },
+  "zephyr": { "es": "zephyr", "en": "zephyr" },
+  "fpga": { "es": "fpga", "en": "fpga" },
+  "dsp": { "es": "dsp", "en": "dsp" }
+}

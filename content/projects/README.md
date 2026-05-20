@@ -1,66 +1,57 @@
-# Adding a project (JSON-first)
+# Agregar un proyecto (bilingüe ES + EN)
 
-Drop a new `.json` file in this folder. The site discovers it automatically — no route or registry edits.
+Creá un archivo `.json` o `.mdx` en esta carpeta. El sitio lo detecta solo — aparece en `/es/projects/...` y `/en/projects/...`.
 
-## Quick start
+## Tags (`tagIds`)
 
-1. Copy the template below to `my-project.json`
-2. Add images under `public/images/projects/my-project/`
-3. Set `"featured": true` to show on the homepage
-4. Run `npm run dev` and open `/projects/my-project`
-
-## JSON template
+Los tags usan **ids estables** definidos en `content/registries/tags.json`:
 
 ```json
 {
-  "title": "Project Title",
-  "description": "Long overview for the project detail page.",
-  "shortDescription": "One line for cards and SEO.",
-  "tags": ["embedded", "robotics"],
-  "technologies": ["STM32", "C", "FreeRTOS"],
-  "coverImage": "/images/projects/my-project/cover.jpg",
-  "galleryImages": [],
-  "githubUrl": "https://github.com/you/repo",
-  "demoUrl": "https://example.com",
-  "featured": false,
-  "date": "2026-03-01",
-  "status": "completed",
-  "markdownContent": "## Optional write-up\n\nSupports **Markdown** via MDX compiler.",
-  "technicalDetails": [
-    { "label": "MCU", "value": "STM32F4" }
-  ],
-  "metrics": [
-    { "label": "Loop rate", "value": "1", "unit": "kHz" }
-  ],
-  "videoUrl": "https://www.youtube.com/embed/VIDEO_ID"
+  "aerospace": { "es": "aeroespacial", "en": "aerospace" }
 }
 ```
 
-## Field reference
+En el proyecto:
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `title` | yes | Display name |
-| `description` | yes | Overview paragraph |
-| `shortDescription` | yes | Card + meta description |
-| `tags` | yes | Filter chips on `/projects` |
-| `technologies` | yes | Stack badges |
-| `coverImage` | yes | Path under `public/` |
-| `galleryImages` | no | Array of image paths |
-| `githubUrl` | no | Source link |
-| `demoUrl` | no | Live demo link |
-| `featured` | no | Homepage section (default `false`) |
-| `date` | yes | ISO date string |
-| `status` | yes | `completed` \| `in-progress` \| `archived` |
-| `markdownContent` | no | Markdown body on detail page |
-| `technicalDetails` | no | `{ label, value }[]` spec table |
-| `metrics` | no | `{ label, value, unit? }[]` results |
-| `videoUrl` | no | Embed URL (e.g. YouTube embed) |
+```json
+"tagIds": ["aerospace", "stm32"]
+```
 
-## MDX alternative
+Los filtros en `/projects` muestran las mismas categorías en ES y EN.
 
-Create `my-project.mdx` with YAML frontmatter (same fields) and Markdown body. See `fpga-signal-processor.mdx` for an example.
+## Plantilla JSON
 
-## Slug
+```json
+{
+  "title": { "es": "Título", "en": "Title" },
+  "description": { "es": "...", "en": "..." },
+  "shortDescription": { "es": "...", "en": "..." },
+  "tagIds": ["embedded", "rtos"],
+  "technologies": ["STM32", "C"],
+  "coverImage": "/images/projects/mi-proyecto/cover.svg",
+  "galleryImages": [],
+  "githubUrl": "https://github.com/tu-usuario/repo",
+  "featured": false,
+  "date": "2026-03-01",
+  "updatedAt": "2026-03-15",
+  "status": "completed",
+  "markdownContent": {
+    "es": "## Detalle\n\nMarkdown en español.",
+    "en": "## Details\n\nMarkdown in English."
+  }
+}
+```
 
-The URL slug is the **filename** without extension: `my-project.json` → `/projects/my-project`.
+## MDX
+
+- Frontmatter YAML con los mismos campos (incl. `tagIds`).
+- **No** dejar markdown en el body del archivo; usar solo `markdownContent.es` / `markdownContent.en`.
+
+## Validación
+
+```bash
+npm run validate:content
+```
+
+Ver [docs/16-content-validation.md](../../docs/16-content-validation.md).

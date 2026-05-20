@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://portfolio.local/schemas/project.frontmatter.schema.json",
+  "title": "PortfolioProject",
+  "description": "Bilingual project document stored as content/projects/{slug}.json or MDX frontmatter",
+  "type": "object",
+  "required": [
+    "title",
+    "description",
+    "shortDescription",
+    "tags",
+    "technologies",
+    "coverImage",
+    "date",
+    "status"
+  ],
+  "properties": {
+    "slug": {
+      "type": "string",
+      "description": "Optional. Defaults to filename without extension."
+    },
+    "title": { "$ref": "#/$defs/localizedString" },
+    "description": { "$ref": "#/$defs/localizedString" },
+    "shortDescription": { "$ref": "#/$defs/localizedString" },
+    "tags": { "$ref": "#/$defs/localizedStringArray" },
+    "technologies": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "coverImage": {
+      "type": "string",
+      "pattern": "^/",
+      "description": "Public path e.g. /images/projects/{slug}/cover.webp"
+    },
+    "galleryImages": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^/" },
+      "default": []
+    },
+    "githubUrl": { "type": "string", "format": "uri" },
+    "demoUrl": { "type": "string", "format": "uri" },
+    "featured": { "type": "boolean", "default": false },
+    "date": {
+      "type": "string",
+      "description": "ISO date YYYY-MM-DD recommended"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["completed", "in-progress", "archived"]
+    },
+    "markdownContent": { "$ref": "#/$defs/localizedString" },
+    "technicalDetails": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "value"],
+        "properties": {
+          "label": { "$ref": "#/$defs/localizedString" },
+          "value": { "$ref": "#/$defs/localizedString" }
+        }
+      },
+      "default": []
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "value"],
+        "properties": {
+          "label": { "$ref": "#/$defs/localizedString" },
+          "value": { "$ref": "#/$defs/localizedString" },
+          "unit": { "$ref": "#/$defs/localizedString" }
+        }
+      },
+      "default": []
+    },
+    "videoUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "Embed URL (e.g. YouTube embed)"
+    }
+  },
+  "$defs": {
+    "localizedString": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["es", "en"],
+          "properties": {
+            "es": { "type": "string", "minLength": 1 },
+            "en": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        },
+        { "type": "string", "minLength": 1 }
+      ]
+    },
+    "localizedStringArray": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["es", "en"],
+          "properties": {
+            "es": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "en": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      ]
+    }
+  }
+}

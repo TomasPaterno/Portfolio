@@ -1,0 +1,40 @@
+{
+  "categories": [
+    {
+      "id": "mcu",
+      "title": { "es": "MCU & SoC", "en": "MCU & SoC" },
+      "skills": [
+        { "es": "STM32 / ESP32", "en": "STM32 / ESP32" },
+        { "es": "nRF52", "en": "nRF52" },
+        { "es": "Bootloaders", "en": "Bootloaders" }
+      ]
+    },
+    {
+      "id": "rtos",
+      "title": { "es": "RTOS & bare-metal", "en": "RTOS & bare-metal" },
+      "skills": [
+        { "es": "FreeRTOS", "en": "FreeRTOS" },
+        { "es": "Zephyr", "en": "Zephyr" },
+        { "es": "ISR / DMA", "en": "ISR / DMA" }
+      ]
+    },
+    {
+      "id": "fpga",
+      "title": { "es": "FPGA & señales", "en": "FPGA & signals" },
+      "skills": [
+        { "es": "Verilog", "en": "Verilog" },
+        { "es": "AXI-Stream", "en": "AXI-Stream" },
+        { "es": "DSP", "en": "DSP" }
+      ]
+    },
+    {
+      "id": "protocols",
+      "title": { "es": "Protocolos", "en": "Protocols" },
+      "skills": [
+        { "es": "CAN / CANopen", "en": "CAN / CANopen" },
+        { "es": "MAVLink", "en": "MAVLink" },
+        { "es": "Modbus", "en": "Modbus" }
+      ]
+    }
+  ]
+}

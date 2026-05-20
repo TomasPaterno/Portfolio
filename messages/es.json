@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "projects": "Proyectos",
+    "about": "Sobre mí",
+    "contact": "Contacto",
+    "getInTouch": "Contactar",
+    "embeddedTag": "/ embebidos",
+    "menu": "Navegación"
+  },
+  "hero": {
+    "eyebrow": "Embebidos · Robótica · Electrónica",
+    "viewProjects": "Ver proyectos",
+    "aboutMe": "Sobre mí"
+  },
+  "featured": {
+    "eyebrow": "Trabajo destacado",
+    "title": "Proyectos destacados",
+    "description": "Controladores de vuelo, hubs de sensores y procesamiento de señales — ingeniería confiable bajo restricciones reales.",
+    "allProjects": "Todos los proyectos"
+  },
+  "skills": {
+    "eyebrow": "Capacidades",
+    "title": "Stack de ingeniería",
+    "description": "Desde firmware bare-metal hasta lazos de control listos para vuelo — herramientas y plataformas para sistemas de hardware confiables."
+  },
+  "cta": {
+    "eyebrow": "Colaborar",
+    "title": "¿Construís algo con precisión?",
+    "description": "Abierto a roles en firmware, robótica e ingeniería de hardware — o colaboraciones técnicas en productos embebidos ambiciosos.",
+    "button": "Iniciar conversación"
+  },
+  "projects": {
+    "eyebrow": "Portfolio",
+    "title": "Proyectos",
+    "description": "Firmware, control de vuelo, redes de sensores y cadenas de señal FPGA — documentados con especificaciones, métricas y notas de arquitectura.",
+    "empty": "Aún no hay proyectos. Agregá un archivo JSON en content/projects/.",
+    "filterAll": "Todos",
+    "backToProjects": "Todos los proyectos",
+    "notFoundTitle": "Proyecto no encontrado",
+    "notFoundDescription": "Este proyecto pudo haber sido movido o eliminado."
+  },
+  "status": {
+    "completed": "completado",
+    "in-progress": "en progreso",
+    "archived": "archivado"
+  },
+  "projectDetail": {
+    "overview": "Resumen",
+    "technical": "Especificaciones",
+    "metrics": "Métricas",
+    "gallery": "Galería",
+    "writeup": "Profundización",
+    "technicalTitle": "Especificaciones técnicas",
+    "metricsTitle": "Resultados y métricas",
+    "deepDive": "Profundización",
+    "status": "Estado",
+    "date": "Fecha",
+    "stack": "Stack",
+    "viewSource": "Ver código",
+    "liveDemo": "Demo en vivo",
+    "sectionsNav": "Secciones de la página"
+  },
+  "about": {
+    "metaTitle": "Sobre mí",
+    "metaDescription": "Sobre {name} — {title}.",
+    "eyebrow": "Perfil",
+    "title": "Sobre mí",
+    "experience": "Experiencia",
+    "principles": "Principios"
+  },
+  "contact": {
+    "metaTitle": "Contacto",
+    "metaDescription": "Contactá a {name}.",
+    "eyebrow": "Contacto",
+    "title": "Conectemos",
+    "intro": "¿Te interesan roles en ingeniería embebida, consultoría o colaboración técnica? Escribime directamente — suelo responder en pocos días.",
+    "emailTitle": "Email",
+    "emailDescription": "Ideal para consultas detalladas",
+    "socialTitle": "Redes",
+    "socialDescription": "Código y perfil profesional",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "formNote": "¿Preferís un formulario? Conectá Formspree, Resend o la API de contacto de Vercel reemplazando esta sección."
+  },
+  "footer": {
+    "builtWith": "Construido con Next.js"
+  },
+  "language": {
+    "label": "Idioma",
+    "ariaLabel": "Seleccionar idioma",
+    "es": "ES",
+    "en": "EN"
+  }
+}

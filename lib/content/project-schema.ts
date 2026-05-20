@@ -1,23 +1,37 @@
 import { z } from "zod";
 
+const localizedStringSchema = z.union([
+  z.object({
+    es: z.string().min(1),
+    en: z.string().min(1),
+  }),
+  z.string().min(1),
+]);
+
+const localizedSeoSchema = z.object({
+  title: localizedStringSchema.optional(),
+  description: localizedStringSchema.optional(),
+  noindex: z.boolean().optional(),
+});
+
 export const technicalDetailSchema = z.object({
-  label: z.string(),
-  value: z.string(),
+  label: localizedStringSchema,
+  value: localizedStringSchema,
 });
 
 export const metricSchema = z.object({
-  label: z.string(),
-  value: z.string(),
-  unit: z.string().optional(),
+  label: localizedStringSchema,
+  value: localizedStringSchema,
+  unit: localizedStringSchema.optional(),
 });
 
-/** Frontmatter / JSON fields for a portfolio project (slug comes from filename). */
+/** Raw project file shape (bilingual fields). */
 export const projectFrontmatterSchema = z.object({
   slug: z.string().optional(),
-  title: z.string(),
-  description: z.string(),
-  shortDescription: z.string(),
-  tags: z.array(z.string()),
+  title: localizedStringSchema,
+  description: localizedStringSchema,
+  shortDescription: localizedStringSchema,
+  tagIds: z.array(z.string()).min(1),
   technologies: z.array(z.string()),
   coverImage: z.string(),
   galleryImages: z.array(z.string()).default([]),
@@ -25,13 +39,15 @@ export const projectFrontmatterSchema = z.object({
   demoUrl: z.string().url().optional(),
   featured: z.boolean().default(false),
   date: z.string(),
+  updatedAt: z.string().optional(),
   status: z.enum(["completed", "in-progress", "archived"]),
-  markdownContent: z.string().optional(),
+  markdownContent: localizedStringSchema.optional(),
   technicalDetails: z.array(technicalDetailSchema).default([]),
   metrics: z.array(metricSchema).default([]),
   videoUrl: z.string().url().optional(),
+  seo: localizedSeoSchema.optional(),
 });
 
-export type ProjectFrontmatter = z.infer<typeof projectFrontmatterSchema>;
-export type TechnicalDetail = z.infer<typeof technicalDetailSchema>;
-export type ProjectMetric = z.infer<typeof metricSchema>;
+export type ProjectFrontmatterRaw = z.infer<typeof projectFrontmatterSchema>;
+export type TechnicalDetailRaw = z.infer<typeof technicalDetailSchema>;
+export type ProjectMetricRaw = z.infer<typeof metricSchema>;

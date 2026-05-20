@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://portfolio.local/schemas/site-profile.schema.json",
+  "title": "SiteProfile",
+  "description": "Target schema for CMS — today implemented in config/site.ts",
+  "type": "object",
+  "required": ["name", "title", "description", "author", "email", "social"],
+  "properties": {
+    "name": { "$ref": "#/$defs/localizedString" },
+    "title": { "$ref": "#/$defs/localizedString" },
+    "description": { "$ref": "#/$defs/localizedString" },
+    "author": { "$ref": "#/$defs/localizedString" },
+    "email": { "type": "string", "format": "email" },
+    "url": { "type": "string", "format": "uri" },
+    "social": {
+      "type": "object",
+      "required": ["github", "linkedin"],
+      "properties": {
+        "github": { "type": "string", "format": "uri" },
+        "linkedin": { "type": "string", "format": "uri" }
+      }
+    },
+    "keywords": {
+      "type": "object",
+      "properties": {
+        "es": { "type": "array", "items": { "type": "string" } },
+        "en": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "navigation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "href", "labelKey", "enabled"],
+        "properties": {
+          "id": { "type": "string" },
+          "href": { "type": "string" },
+          "labelKey": { "type": "string", "description": "Key in messages nav.*" },
+          "enabled": { "type": "boolean" }
+        }
+      }
+    },
+    "homeSections": {
+      "type": "object",
+      "properties": {
+        "featured": { "type": "boolean", "default": true },
+        "skills": { "type": "boolean", "default": true },
+        "cta": { "type": "boolean", "default": true }
+      }
+    }
+  },
+  "$defs": {
+    "localizedString": {
+      "type": "object",
+      "required": ["es", "en"],
+      "properties": {
+        "es": { "type": "string", "minLength": 1 },
+        "en": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

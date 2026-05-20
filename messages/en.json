@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "getInTouch": "Get in touch",
+    "embeddedTag": "/ embedded",
+    "menu": "Navigation"
+  },
+  "hero": {
+    "eyebrow": "Embedded · Robotics · Electronics",
+    "viewProjects": "View projects",
+    "aboutMe": "About me"
+  },
+  "featured": {
+    "eyebrow": "Selected work",
+    "title": "Featured projects",
+    "description": "Flight controllers, sensor hubs, and signal processing — engineered for reliability under real-world constraints.",
+    "allProjects": "All projects"
+  },
+  "skills": {
+    "eyebrow": "Capabilities",
+    "title": "Engineering stack",
+    "description": "From bare-metal firmware to flight-ready control loops — tools and platforms I use to ship reliable hardware systems."
+  },
+  "cta": {
+    "eyebrow": "Collaborate",
+    "title": "Building something precise?",
+    "description": "Open to firmware, robotics, and hardware engineering roles — or technical collaborations on ambitious embedded products.",
+    "button": "Start a conversation"
+  },
+  "projects": {
+    "eyebrow": "Portfolio",
+    "title": "Projects",
+    "description": "Firmware, flight control, sensor networks, and FPGA signal chains — documented with specs, metrics, and architecture notes.",
+    "empty": "No projects yet. Add a JSON file to content/projects/.",
+    "filterAll": "All",
+    "backToProjects": "All projects",
+    "notFoundTitle": "Project not found",
+    "notFoundDescription": "This project may have been moved or removed."
+  },
+  "status": {
+    "completed": "completed",
+    "in-progress": "in progress",
+    "archived": "archived"
+  },
+  "projectDetail": {
+    "overview": "Overview",
+    "technical": "Technical",
+    "metrics": "Metrics",
+    "gallery": "Gallery",
+    "writeup": "Write-up",
+    "technicalTitle": "Technical specifications",
+    "metricsTitle": "Results & metrics",
+    "deepDive": "Deep dive",
+    "status": "Status",
+    "date": "Date",
+    "stack": "Stack",
+    "viewSource": "View source",
+    "liveDemo": "Live demo",
+    "sectionsNav": "Page sections"
+  },
+  "about": {
+    "metaTitle": "About",
+    "metaDescription": "About {name} — {title}.",
+    "eyebrow": "Profile",
+    "title": "About",
+    "experience": "Experience",
+    "principles": "Principles"
+  },
+  "contact": {
+    "metaTitle": "Contact",
+    "metaDescription": "Get in touch with {name}.",
+    "eyebrow": "Contact",
+    "title": "Let's connect",
+    "intro": "Interested in embedded engineering roles, consulting, or technical collaboration? Reach out directly — I typically respond within a few days.",
+    "emailTitle": "Email",
+    "emailDescription": "Best for detailed inquiries",
+    "socialTitle": "Social",
+    "socialDescription": "Code and professional profile",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "formNote": "Prefer a form? Connect Formspree, Resend, or Vercel contact API by replacing this section."
+  },
+  "footer": {
+    "builtWith": "Built with Next.js"
+  },
+  "language": {
+    "label": "Language",
+    "ariaLabel": "Select language",
+    "es": "ES",
+    "en": "EN"
+  }
+}

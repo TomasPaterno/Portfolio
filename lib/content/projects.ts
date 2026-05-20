@@ -1,10 +1,13 @@
 import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
+import { unstable_cache } from "next/cache";
+import type { Locale } from "@/i18n/routing";
 import {
   projectFrontmatterSchema,
-  type ProjectFrontmatter,
+  type ProjectFrontmatterRaw,
 } from "@/lib/content/project-schema";
+import { resolveProject } from "@/lib/content/resolve-project";
 import type { Project } from "@/types/project";
 
 const PROJECTS_DIR = path.join(process.cwd(), "content", "projects");
@@ -15,41 +18,51 @@ function getSlugFromFilename(filename: string): string {
   return filename.replace(/\.(json|mdx)$/i, "");
 }
 
-function toProject(
-  data: ProjectFrontmatter,
+async function toProject(
+  data: ProjectFrontmatterRaw,
   filename: string,
-  isMdx: boolean,
-): Project {
+  locale: Locale,
+): Promise<Project> {
   const slug = data.slug ?? getSlugFromFilename(filename);
-  return { ...data, slug, isMdx };
+  return resolveProject(data, slug, locale);
 }
 
-async function loadJsonProject(filename: string): Promise<Project> {
+async function loadJsonProject(
+  filename: string,
+  locale: Locale,
+): Promise<Project> {
   const filePath = path.join(PROJECTS_DIR, filename);
   const raw = await fs.readFile(filePath, "utf-8");
   const parsed = projectFrontmatterSchema.parse(JSON.parse(raw));
-  return toProject(parsed, filename, false);
+  return toProject(parsed, filename, locale);
 }
 
-async function loadMdxProject(filename: string): Promise<Project> {
+async function loadMdxProject(
+  filename: string,
+  locale: Locale,
+): Promise<Project> {
   const filePath = path.join(PROJECTS_DIR, filename);
   const raw = await fs.readFile(filePath, "utf-8");
   const { data, content } = matter(raw);
   const parsed = projectFrontmatterSchema.parse(data);
-  const withBody: ProjectFrontmatter = {
+
+  const withBody: ProjectFrontmatterRaw = {
     ...parsed,
-    markdownContent: content.trim() || parsed.markdownContent,
+    ...(parsed.markdownContent || !content.trim() ? {} : {}),
   };
-  return toProject(withBody, filename, true);
+
+  return toProject(withBody, filename, locale);
 }
 
-async function loadProjectFile(filename: string): Promise<Project | null> {
-  if (filename.endsWith(".json")) return loadJsonProject(filename);
-  if (filename.endsWith(".mdx")) return loadMdxProject(filename);
+async function loadProjectFile(
+  filename: string,
+  locale: Locale,
+): Promise<Project | null> {
+  if (filename.endsWith(".json")) return loadJsonProject(filename, locale);
+  if (filename.endsWith(".mdx")) return loadMdxProject(filename, locale);
   return null;
 }
 
-/** List project content files (excludes README and schema helpers). */
 async function listProjectFiles(): Promise<string[]> {
   const entries = await fs.readdir(PROJECTS_DIR);
   return entries.filter((name) =>
@@ -57,10 +70,11 @@ async function listProjectFiles(): Promise<string[]> {
   );
 }
 
-/** All projects, newest first. */
-export async function getAllProjects(): Promise<Project[]> {
+async function loadAllProjectsUncached(locale: Locale): Promise<Project[]> {
   const files = await listProjectFiles();
-  const projects = await Promise.all(files.map(loadProjectFile));
+  const projects = await Promise.all(
+    files.map((file) => loadProjectFile(file, locale)),
+  );
   return projects
     .filter((p): p is Project => p !== null)
     .sort(
@@ -68,17 +82,35 @@ export async function getAllProjects(): Promise<Project[]> {
     );
 }
 
-export async function getFeaturedProjects(): Promise<Project[]> {
-  const all = await getAllProjects();
+export async function getAllProjects(locale: Locale): Promise<Project[]> {
+  return unstable_cache(
+    () => loadAllProjectsUncached(locale),
+    ["projects", locale],
+    { tags: ["projects"] },
+  )();
+}
+
+async function getProjectsBySlugMap(
+  locale: Locale,
+): Promise<Map<string, Project>> {
+  const projects = await getAllProjects(locale);
+  return new Map(projects.map((p) => [p.slug, p]));
+}
+
+export async function getFeaturedProjects(locale: Locale): Promise<Project[]> {
+  const all = await getAllProjects(locale);
   return all.filter((p) => p.featured);
 }
 
-export async function getProjectBySlug(slug: string): Promise<Project | null> {
-  const all = await getAllProjects();
-  return all.find((p) => p.slug === slug) ?? null;
+export async function getProjectBySlug(
+  slug: string,
+  locale: Locale,
+): Promise<Project | null> {
+  const map = await getProjectsBySlugMap(locale);
+  return map.get(slug) ?? null;
 }
 
 export async function getProjectSlugs(): Promise<string[]> {
-  const all = await getAllProjects();
-  return all.map((p) => p.slug);
+  const files = await listProjectFiles();
+  return files.map(getSlugFromFilename);
 }

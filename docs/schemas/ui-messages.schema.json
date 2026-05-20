@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://portfolio.local/schemas/ui-messages.schema.json",
+  "title": "UIMessages",
+  "description": "Structure for messages/es.json and messages/en.json — keys must match across locales",
+  "type": "object",
+  "required": [
+    "nav",
+    "hero",
+    "featured",
+    "skills",
+    "cta",
+    "projects",
+    "status",
+    "projectDetail",
+    "about",
+    "contact",
+    "footer"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "LEGACY — prefer site profile; not used by app today",
+      "properties": {
+        "siteTitle": { "type": "string" },
+        "siteSubtitle": { "type": "string" },
+        "siteDescription": { "type": "string" },
+        "keywords": { "type": "string" }
+      }
+    },
+    "nav": {
+      "type": "object",
+      "required": ["home", "projects", "about", "contact", "getInTouch", "embeddedTag", "menu"],
+      "additionalProperties": { "type": "string" }
+    },
+    "hero": { "type": "object", "additionalProperties": { "type": "string" } },
+    "featured": { "type": "object", "additionalProperties": { "type": "string" } },
+    "skills": { "type": "object", "additionalProperties": { "type": "string" } },
+    "cta": { "type": "object", "additionalProperties": { "type": "string" } },
+    "projects": { "type": "object", "additionalProperties": { "type": "string" } },
+    "status": {
+      "type": "object",
+      "required": ["completed", "in-progress", "archived"],
+      "additionalProperties": { "type": "string" }
+    },
+    "projectDetail": { "type": "object", "additionalProperties": { "type": "string" } },
+    "about": { "type": "object", "additionalProperties": { "type": "string" } },
+    "contact": { "type": "object", "additionalProperties": { "type": "string" } },
+    "footer": { "type": "object", "additionalProperties": { "type": "string" } },
+    "language": { "type": "object", "additionalProperties": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

@@ -1,8 +1,17 @@
 {
-  "title": "Industrial RTOS Sensor Hub",
-  "description": "Multi-sensor edge node aggregating environmental and vibration data over CAN bus. Zephyr RTOS with modular driver architecture and OTA-ready bootloader partition.",
-  "shortDescription": "Zephyr-based CAN sensor hub with OTA bootloader support.",
-  "tags": ["iot", "industrial", "zephyr"],
+  "title": {
+    "es": "Hub de sensores industrial RTOS",
+    "en": "Industrial RTOS Sensor Hub"
+  },
+  "description": {
+    "es": "Nodo edge multi-sensor que agrega datos ambientales y de vibración por bus CAN. Zephyr RTOS con arquitectura modular de drivers y partición bootloader lista para OTA.",
+    "en": "Multi-sensor edge node aggregating environmental and vibration data over CAN bus. Zephyr RTOS with modular driver architecture and OTA-ready bootloader partition."
+  },
+  "shortDescription": {
+    "es": "Hub de sensores CAN con Zephyr y soporte OTA.",
+    "en": "Zephyr-based CAN sensor hub with OTA bootloader support."
+  },
+  "tagIds": ["iot", "industrial", "zephyr"],
   "technologies": ["Zephyr", "CAN", "Rust bindings", "nRF52840"],
   "coverImage": "/images/projects/rtos-sensor-hub/cover.svg",
   "galleryImages": [],
@@ -10,15 +19,38 @@
   "featured": true,
   "date": "2026-01-20",
   "status": "in-progress",
-  "markdownContent": "## Goals\n\nDeploy **50+ nodes** on a factory floor with synchronized sampling and sub-10 ms CAN latency for vibration monitoring.\n\nWork in progress: finalizing OTA signature verification and power profiling for battery-backed nodes.",
+  "markdownContent": {
+    "es": "## Objetivos\n\nDesplegar **50+ nodos** en planta con muestreo sincronizado y latencia CAN sub-10 ms para monitoreo de vibraciones.\n\nEn progreso: verificación de firma OTA y perfil de consumo en nodos con batería.",
+    "en": "## Goals\n\nDeploy **50+ nodes** on a factory floor with synchronized sampling and sub-10 ms CAN latency for vibration monitoring.\n\nWork in progress: finalizing OTA signature verification and power profiling for battery-backed nodes."
+  },
   "technicalDetails": [
-    { "label": "Platform", "value": "nRF52840 + custom carrier" },
-    { "label": "RTOS", "value": "Zephyr 3.x" },
-    { "label": "Bus", "value": "CAN FD @ 2 Mbps" },
-    { "label": "Sensors", "value": "BME680, ADXL345, mic" }
+    {
+      "label": { "es": "Plataforma", "en": "Platform" },
+      "value": { "es": "nRF52840 + carrier custom", "en": "nRF52840 + custom carrier" }
+    },
+    {
+      "label": { "es": "RTOS", "en": "RTOS" },
+      "value": { "es": "Zephyr 3.x", "en": "Zephyr 3.x" }
+    },
+    {
+      "label": { "es": "Bus", "en": "Bus" },
+      "value": { "es": "CAN FD @ 2 Mbps", "en": "CAN FD @ 2 Mbps" }
+    },
+    {
+      "label": { "es": "Sensores", "en": "Sensors" },
+      "value": { "es": "BME680, ADXL345, mic", "en": "BME680, ADXL345, mic" }
+    }
   ],
   "metrics": [
-    { "label": "Nodes deployed", "value": "12", "unit": "pilot" },
-    { "label": "Sample rate", "value": "500", "unit": "Hz" }
+    {
+      "label": { "es": "Nodos desplegados", "en": "Nodes deployed" },
+      "value": "12",
+      "unit": { "es": "piloto", "en": "pilot" }
+    },
+    {
+      "label": { "es": "Tasa de muestreo", "en": "Sample rate" },
+      "value": "500",
+      "unit": { "es": "Hz", "en": "Hz" }
+    }
   ]
 }

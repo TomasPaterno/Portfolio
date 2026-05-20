@@ -1,11 +1,15 @@
 ---
-title: FPGA Real-Time Signal Processor
-description: Xilinx Artix-7 pipeline for high-throughput IQ sample processing with AXI-Stream interfaces and host DMA over PCIe.
-shortDescription: Artix-7 DSP pipeline with AXI-Stream and PCIe DMA.
-tags:
-  - fpga
-  - dsp
-  - aerospace
+title:
+  es: Procesador de señales FPGA en tiempo real
+  en: FPGA Real-Time Signal Processor
+description:
+  es: Pipeline en Xilinx Artix-7 para procesamiento de muestras IQ de alto throughput con interfaces AXI-Stream y DMA al host por PCIe.
+  en: Xilinx Artix-7 pipeline for high-throughput IQ sample processing with AXI-Stream interfaces and host DMA over PCIe.
+shortDescription:
+  es: Pipeline DSP Artix-7 con AXI-Stream y DMA PCIe.
+  en: Artix-7 DSP pipeline with AXI-Stream and PCIe DMA.
+tagIds: [fpga, dsp, aerospace]
+updatedAt: "2025-08-15"
 technologies:
   - Verilog
   - Vivado
@@ -19,36 +23,75 @@ featured: true
 date: "2025-08-01"
 status: completed
 technicalDetails:
-  - label: Device
-    value: XC7A200T
-  - label: Clock
-    value: 200 MHz DSP core
-  - label: Throughput
-    value: 1.2 GS/s complex samples
+  - label:
+      es: Dispositivo
+      en: Device
+    value:
+      es: XC7A200T
+      en: XC7A200T
+  - label:
+      es: Reloj
+      en: Clock
+    value:
+      es: Núcleo DSP 200 MHz
+      en: 200 MHz DSP core
+  - label:
+      es: Throughput
+      en: Throughput
+    value:
+      es: 1.2 GS/s muestras complejas
+      en: 1.2 GS/s complex samples
 metrics:
-  - label: Latency
+  - label:
+      es: Latencia
+      en: Latency
     value: "48"
-    unit: ns
-  - label: DSP slices
+    unit:
+      es: ns
+      en: ns
+  - label:
+      es: Slices DSP
+      en: DSP slices
     value: "62%"
-    unit: utilization
----
+    unit:
+      es: utilización
+      en: utilization
+markdownContent:
+  es: |
+    ## Resumen
 
-## Overview
+    Este proyecto implementa una **cadena DSP de punto fijo** en Artix-7 para procesamiento IQ en tiempo real. El diseño prioriza latencia predecible y manejo limpio de backpressure AXI-Stream.
 
-This project implements a **fixed-point DSP chain** on Artix-7 for real-time IQ processing. The design prioritizes predictable latency and clean AXI-Stream backpressure handling.
+    ## Etapas del pipeline
 
-## Pipeline stages
+    1. **FIFO de entrada** — buffer elástico desde la interfaz ADC
+    2. **Rotador CORDIC** — corrección de fase por bin
+    3. **Decimador FIR** — downsampling 4× con coeficientes simétricos
+    4. **Estimador de magnitud** — detección de picos para lógica de trigger
 
-1. **Input FIFO** — elastic buffer from ADC interface
-2. **CORDIC rotator** — phase correction per bin
-3. **FIR decimator** — 4× downsample with symmetric coeffs
-4. **Magnitude estimator** — peak detect for trigger logic
+    ## Integración con host
 
-## Host integration
+    Un daemon Python mapea el espacio BAR PCIe para peek/poke de registros y persiste capturas a disco para análisis offline.
 
-A Python control daemon maps PCIe BAR space for register peek/poke and streams capture buffers to disk for offline analysis.
+    ## Aprendizajes
 
-## Lessons learned
+    El cierre de timing a 200 MHz requirió retiming de pipeline en la etapa CORDIC. Los atributos `(* use_dsp = "yes" *)` redujeron presión de LUTs significativamente.
+  en: |
+    ## Overview
 
-Timing closure at 200 MHz required pipeline retiming on the CORDIC stage. Using `(* use_dsp = "yes" *)` attributes cut LUT pressure significantly.
+    This project implements a **fixed-point DSP chain** on Artix-7 for real-time IQ processing. The design prioritizes predictable latency and clean AXI-Stream backpressure handling.
+
+    ## Pipeline stages
+
+    1. **Input FIFO** — elastic buffer from ADC interface
+    2. **CORDIC rotator** — phase correction per bin
+    3. **FIR decimator** — 4× downsample with symmetric coeffs
+    4. **Magnitude estimator** — peak detect for trigger logic
+
+    ## Host integration
+
+    A Python control daemon maps PCIe BAR space for register peek/poke and streams capture buffers to disk for offline analysis.
+
+    ## Lessons learned
+
+    Timing closure at 200 MHz required pipeline retiming on the CORDIC stage. Using `(* use_dsp = "yes" *)` attributes cut LUT pressure significantly.

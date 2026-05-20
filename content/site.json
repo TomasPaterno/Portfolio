@@ -1,0 +1,48 @@
+{
+  "name": "Tomás Paternó",
+  "title": {
+    "es": "Ingeniero de Sistemas Embebidos",
+    "en": "Embedded Systems Engineer"
+  },
+  "description": {
+    "es": "Portfolio de firmware, RTOS, FPGA y sistemas de control para aplicaciones industriales y aeroespaciales.",
+    "en": "Portfolio of firmware, RTOS, FPGA, and control systems for industrial and aerospace applications."
+  },
+  "url": "https://tomas-paterno.dev",
+  "ogImage": "/og.png",
+  "keywords": {
+    "es": [
+      "sistemas embebidos",
+      "firmware",
+      "RTOS",
+      "FPGA",
+      "STM32",
+      "control de vuelo"
+    ],
+    "en": [
+      "embedded systems",
+      "firmware",
+      "RTOS",
+      "FPGA",
+      "STM32",
+      "flight control"
+    ]
+  },
+  "email": "hello@tomas-paterno.dev",
+  "links": {
+    "github": "https://github.com/tomas-paterno",
+    "linkedin": "https://linkedin.com/in/tomas-paterno",
+    "email": "mailto:hello@tomas-paterno.dev"
+  },
+  "navigation": [
+    { "href": "/", "labelKey": "home", "enabled": true },
+    { "href": "/projects", "labelKey": "projects", "enabled": true },
+    { "href": "/about", "labelKey": "about", "enabled": true },
+    { "href": "/contact", "labelKey": "contact", "enabled": true }
+  ],
+  "homeSections": {
+    "featuredProjects": true,
+    "skillsMarquee": true,
+    "ctaStrip": true
+  }
+}

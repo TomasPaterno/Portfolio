@@ -1,22 +1,19 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { Locale } from "@/i18n/routing";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDate(date: string): string {
-  return new Intl.DateTimeFormat("en-US", {
+const dateLocales: Record<Locale, string> = {
+  es: "es-AR",
+  en: "en-US",
+};
+
+export function formatDate(date: string, locale: Locale): string {
+  return new Intl.DateTimeFormat(dateLocales[locale], {
     month: "long",
     year: "numeric",
   }).format(new Date(date));
-}
-
-export function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .trim();
 }

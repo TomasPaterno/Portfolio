@@ -1,0 +1,64 @@
+{
+  "intro": {
+    "es": "Ingeniero enfocado en firmware de misión crítica, integración hardware-software y validación en campo.",
+    "en": "Engineer focused on mission-critical firmware, hardware-software integration, and field validation."
+  },
+  "timeline": [
+    {
+      "year": { "es": "2024 — presente", "en": "2024 — present" },
+      "title": {
+        "es": "Ingeniero de sistemas embebidos",
+        "en": "Embedded systems engineer"
+      },
+      "description": {
+        "es": "Diseño de controladores de vuelo, buses CAN y pipelines de telemetría.",
+        "en": "Flight controller design, CAN buses, and telemetry pipelines."
+      }
+    },
+    {
+      "year": { "es": "2021 — 2024", "en": "2021 — 2024" },
+      "title": {
+        "es": "Desarrollo firmware industrial",
+        "en": "Industrial firmware development"
+      },
+      "description": {
+        "es": "RTOS, sensores y gateways IoT para plantas de manufactura.",
+        "en": "RTOS, sensors, and IoT gateways for manufacturing plants."
+      }
+    },
+    {
+      "year": { "es": "2018 — 2021", "en": "2018 — 2021" },
+      "title": {
+        "es": "Investigación FPGA / DSP",
+        "en": "FPGA / DSP research"
+      },
+      "description": {
+        "es": "Procesamiento en tiempo real con Verilog y Vivado.",
+        "en": "Real-time processing with Verilog and Vivado."
+      }
+    }
+  ],
+  "values": [
+    {
+      "title": { "es": "Determinismo", "en": "Determinism" },
+      "description": {
+        "es": "Latencias acotadas y comportamiento predecible bajo carga.",
+        "en": "Bounded latency and predictable behavior under load."
+      }
+    },
+    {
+      "title": { "es": "Observabilidad", "en": "Observability" },
+      "description": {
+        "es": "Logs estructurados, métricas y trazas para depuración en campo.",
+        "en": "Structured logs, metrics, and traces for field debugging."
+      }
+    },
+    {
+      "title": { "es": "Seguridad funcional", "en": "Functional safety" },
+      "description": {
+        "es": "Watchdogs, estados fail-safe y pruebas HIL.",
+        "en": "Watchdogs, fail-safe states, and HIL testing."
+      }
+    }
+  ]
+}

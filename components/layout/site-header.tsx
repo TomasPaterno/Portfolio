@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
-import { siteConfig } from "@/config/site";
+import { Link, usePathname } from "@/navigation";
+import type { SiteConfigRaw } from "@/lib/content/site";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,10 +14,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
-export function SiteHeader() {
+type SiteHeaderProps = {
+  siteName: string;
+  navigation: SiteConfigRaw["navigation"];
+};
+
+export function SiteHeader({ siteName, navigation }: SiteHeaderProps) {
+  const t = useTranslations("nav");
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+
+  const navItems = navigation.filter((item) => item.enabled);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -35,19 +44,19 @@ export function SiteHeader() {
           : "border-b border-transparent bg-transparent",
       )}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6">
         <Link
           href="/"
           className="font-mono text-sm font-medium tracking-tight text-foreground transition-opacity hover:opacity-80"
         >
-          {siteConfig.name}
+          {siteName}
           <span className="ml-2 hidden text-muted-foreground sm:inline">
-            / embedded
+            {t("embeddedTag")}
           </span>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {siteConfig.nav.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -58,50 +67,54 @@ export function SiteHeader() {
                   : "text-muted-foreground hover:text-foreground",
               )}
             >
-              {item.title}
+              {t(item.labelKey)}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
+          <LanguageSwitcher />
           <Button asChild size="sm" variant="outline">
-            <Link href="/contact">Get in touch</Link>
+            <Link href="/contact">{t("getInTouch")}</Link>
           </Button>
         </div>
 
-        <Sheet>
-          <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon" aria-label="Open menu">
-              <Menu className="h-5 w-5" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle className="text-left font-mono text-sm">
-                Navigation
-              </SheetTitle>
-            </SheetHeader>
-            <nav className="mt-8 flex flex-col gap-4">
-              {siteConfig.nav.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "text-lg",
-                    pathname === item.href
-                      ? "text-primary"
-                      : "text-muted-foreground",
-                  )}
-                >
-                  {item.title}
-                </Link>
-              ))}
-              <Button asChild className="mt-4">
-                <Link href="/contact">Get in touch</Link>
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageSwitcher />
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label={t("menu")}>
+                <Menu className="h-5 w-5" />
               </Button>
-            </nav>
-          </SheetContent>
-        </Sheet>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle className="text-left font-mono text-sm">
+                  {t("menu")}
+                </SheetTitle>
+              </SheetHeader>
+              <nav className="mt-8 flex flex-col gap-4">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "text-lg",
+                      pathname === item.href
+                        ? "text-primary"
+                        : "text-muted-foreground",
+                    )}
+                  >
+                    {t(item.labelKey)}
+                  </Link>
+                ))}
+                <Button asChild className="mt-4">
+                  <Link href="/contact">{t("getInTouch")}</Link>
+                </Button>
+              </nav>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );

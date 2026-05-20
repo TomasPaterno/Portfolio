@@ -1,31 +1,15 @@
-export type SkillCategory = {
-  name: string;
-  skills: string[];
-};
+import skillsJson from "@/content/skills.json";
+import {
+  resolveSkillCategories,
+  skillsSchema,
+  type SkillCategory,
+} from "@/lib/content/skills";
+import type { Locale } from "@/i18n/routing";
 
-export const skillCategories: SkillCategory[] = [
-  {
-    name: "Firmware & RTOS",
-    skills: ["FreeRTOS", "Zephyr", "Bare-metal C", "CMSIS", "Bootloaders"],
-  },
-  {
-    name: "Hardware",
-    skills: ["STM32", "ESP32", "FPGA", "PCB Design", "Altium", "KiCad"],
-  },
-  {
-    name: "Robotics",
-    skills: ["ROS 2", "PID Control", "Sensor Fusion", "Motor Control", "SLAM"],
-  },
-  {
-    name: "Tools",
-    skills: ["GCC", "CMake", "JTAG", "Logic Analyzers", "Oscilloscopes"],
-  },
-  {
-    name: "Languages",
-    skills: ["C", "C++", "Rust", "Python", "Verilog", "Assembly"],
-  },
-  {
-    name: "Protocols",
-    skills: ["CAN", "I2C", "SPI", "UART", "Ethernet", "MQTT"],
-  },
-];
+const skillsRaw = skillsSchema.parse(skillsJson);
+
+export function getSkillCategories(locale: Locale): SkillCategory[] {
+  return resolveSkillCategories(skillsRaw, locale);
+}
+
+export type { SkillCategory };

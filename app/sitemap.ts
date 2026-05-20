@@ -1,24 +1,41 @@
 import type { MetadataRoute } from "next";
-import { siteConfig } from "@/config/site";
-import { getProjectSlugs } from "@/lib/content/projects";
+import { routing } from "@/i18n/routing";
+import { getSiteConfig } from "@/config/site";
+import { getAllProjects, getProjectSlugs } from "@/lib/content/projects";
+import type { Locale } from "@/i18n/routing";
+
+const staticPaths = ["", "/projects", "/about", "/contact"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = siteConfig.url;
+  const site = getSiteConfig("es");
+  const base = site.url;
   const slugs = await getProjectSlugs();
+  const entries: MetadataRoute.Sitemap = [];
 
-  const staticRoutes: MetadataRoute.Sitemap = [
-    { url: base, lastModified: new Date(), changeFrequency: "monthly", priority: 1 },
-    { url: `${base}/projects`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${base}/contact`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.6 },
-  ];
+  for (const locale of routing.locales) {
+    const projects = await getAllProjects(locale as Locale);
+    const projectBySlug = new Map(projects.map((p) => [p.slug, p]));
 
-  const projectRoutes: MetadataRoute.Sitemap = slugs.map((slug) => ({
-    url: `${base}/projects/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
+    for (const path of staticPaths) {
+      entries.push({
+        url: `${base}/${locale}${path}`,
+        lastModified: new Date(),
+        changeFrequency: path === "/projects" ? "weekly" : "monthly",
+        priority: path === "" ? 1 : path === "/projects" ? 0.9 : 0.7,
+      });
+    }
 
-  return [...staticRoutes, ...projectRoutes];
+    for (const slug of slugs) {
+      const project = projectBySlug.get(slug);
+      const lastModified = project?.updatedAt ?? project?.date;
+      entries.push({
+        url: `${base}/${locale}/projects/${slug}`,
+        lastModified: lastModified ? new Date(lastModified) : new Date(),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      });
+    }
+  }
+
+  return entries;
 }

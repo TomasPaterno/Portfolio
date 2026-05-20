@@ -1,9 +1,14 @@
-import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Code2, Network } from "lucide-react";
-import { siteConfig } from "@/config/site";
+import { Link } from "@/navigation";
+import { getSiteConfig } from "@/config/site";
+import type { Locale } from "@/i18n/routing";
 import { Separator } from "@/components/ui/separator";
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const locale = (await getLocale()) as Locale;
+  const t = await getTranslations({ locale, namespace: "footer" });
+  const site = getSiteConfig(locale);
   const year = new Date().getFullYear();
 
   return (
@@ -12,15 +17,15 @@ export function SiteFooter() {
         <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="font-mono text-sm text-muted-foreground">
-              {siteConfig.name} — {siteConfig.title}
+              {site.name} — {site.title}
             </p>
             <p className="mt-2 max-w-md text-sm text-muted-foreground">
-              {siteConfig.description}
+              {site.description}
             </p>
           </div>
           <div className="flex items-center gap-4">
             <Link
-              href={siteConfig.social.github}
+              href={site.social.github}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground transition-colors hover:text-primary"
@@ -29,7 +34,7 @@ export function SiteFooter() {
               <Code2 className="h-5 w-5" />
             </Link>
             <Link
-              href={siteConfig.social.linkedin}
+              href={site.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground transition-colors hover:text-primary"
@@ -41,7 +46,7 @@ export function SiteFooter() {
         </div>
         <Separator className="my-8" />
         <p className="text-center text-xs text-muted-foreground md:text-left">
-          © {year} {siteConfig.author}. Built with Next.js.
+          © {year} {site.author}. {t("builtWith")}
         </p>
       </div>
     </footer>
