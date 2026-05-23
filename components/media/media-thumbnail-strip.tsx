@@ -1,6 +1,9 @@
 "use client";
 
-import Image from "next/image";
+import {
+  MediaThumbnailDuration,
+  MediaThumbnailTile,
+} from "@/components/media/presentation/media-thumbnail-tile";
 import { cn } from "@/lib/utils";
 import type { ProjectMediaItem } from "@/types/media";
 
@@ -12,13 +15,6 @@ type MediaThumbnailStripProps = {
   className?: string;
 };
 
-function thumbSrc(item: ProjectMediaItem): string {
-  if (item.type === "image") {
-    return item.thumbnail ?? item.src;
-  }
-  return item.thumbnail ?? item.poster ?? item.src;
-}
-
 export function MediaThumbnailStrip({
   media,
   activeIndex,
@@ -29,10 +25,7 @@ export function MediaThumbnailStrip({
   if (media.length <= 1) return null;
 
   return (
-    <nav
-      className={cn("min-w-0", className)}
-      aria-label={title}
-    >
+    <nav className={cn("min-w-0", className)} aria-label={title}>
       <div
         className="flex gap-2 overflow-x-auto overscroll-x-contain pb-1 snap-x snap-mandatory [scrollbar-width:thin]"
         role="tablist"
@@ -52,19 +45,10 @@ export function MediaThumbnailStrip({
                 : "border-border/80 opacity-75 hover:opacity-100",
             )}
           >
-            {item.type === "video" && !item.thumbnail && !item.poster ? (
-              <span className="absolute inset-0 flex items-center justify-center bg-secondary text-[10px] uppercase tracking-wider text-muted-foreground">
-                Video
-              </span>
-            ) : (
-              <Image
-                src={thumbSrc(item)}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="128px"
-              />
-            )}
+            <MediaThumbnailTile item={item} />
+            {item.type === "video" ? (
+              <MediaThumbnailDuration duration={item.duration} />
+            ) : null}
           </button>
         ))}
       </div>

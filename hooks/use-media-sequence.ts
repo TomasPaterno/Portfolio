@@ -48,6 +48,8 @@ export type UseMediaSequenceReturn = {
   onVideoError: () => void;
   onVideoCanPlay: () => void;
   registerVisibility: (visible: boolean) => void;
+  activeItemReady: boolean;
+  markActiveItemReady: () => void;
 };
 
 export function useMediaSequence({
@@ -74,6 +76,8 @@ export function useMediaSequence({
   );
 
   const [hovered, setHovered] = useState(false);
+  const [activeItemReady, setActiveItemReady] = useState(true);
+  const skipReadyResetRef = useRef(true);
 
   const activeItem = media[state.activeIndex];
   const autoplay =
@@ -132,6 +136,14 @@ export function useMediaSequence({
       }, VIDEO_ERROR_FALLBACK_MS);
     });
   }, [activeItem]);
+
+  useEffect(() => {
+    if (skipReadyResetRef.current) {
+      skipReadyResetRef.current = false;
+      return;
+    }
+    setActiveItemReady(false);
+  }, [state.activeIndex]);
 
   useEffect(() => {
     dispatch({ type: "INIT", count, startIndex: initialIndex });
@@ -288,6 +300,10 @@ export function useMediaSequence({
     [clearImageTimer, clearManualHoldTimer],
   );
 
+  const markActiveItemReady = useCallback(() => {
+    setActiveItemReady(true);
+  }, []);
+
   return {
     activeIndex: state.activeIndex,
     activeItem,
@@ -305,5 +321,7 @@ export function useMediaSequence({
     onVideoError,
     onVideoCanPlay,
     registerVisibility,
+    activeItemReady,
+    markActiveItemReady,
   };
 }

@@ -41,14 +41,36 @@ En JSON/MDX:
 
 Paths son **public URLs** (empiezan con `/`), no paths relativos al repo sin `public`.
 
-## 8.3 next/image
+## 8.3 next/image y presentación contextual
 
-| Ubicación | Modo | sizes |
-|-----------|------|-------|
-| ProjectCard | `fill` + aspect 16/10 | responsive vw |
-| Detail hero | `fill` aspect 21/9 | 1152px max |
-| Gallery main | `fill` aspect video | 66vw |
-| Gallery thumbs | `fill` | 120px |
+El renderizado usa `lib/media/presentation/` + `MediaRenderer` (frame estable + surface con `object-fit` / `object-position`).
+
+| Contexto | Portrait | Landscape / ultrawide |
+|----------|----------|------------------------|
+| Hero | `contain` (letterbox) | `cover` + focal |
+| Card | `contain` | `cover` |
+| Thumbnail | `cover` + focal | `cover` |
+| Fullscreen | `contain` (tecla `C` alterna cover) | `contain` |
+
+Campos opcionales en cada ítem (`presentation`):
+
+```json
+"presentation": {
+  "width": 1920,
+  "height": 1080,
+  "aspectRatio": 1.78,
+  "focalX": 0.5,
+  "focalY": 0.35,
+  "cropMode": "auto"
+}
+```
+
+| Ubicación | Frame | sizes |
+|-----------|-------|-------|
+| ProjectCard | aspect 16/10 | responsive vw |
+| Detail hero | aspect 16/9 → 21/9, max 50vh | 1152px max |
+| Gallery thumbs | aspect-video tile | 128px |
+| Fullscreen | flex child | 100vw |
 
 **SVG:** `next.config.ts` habilita `dangerouslyAllowSVG` con CSP sandbox.
 

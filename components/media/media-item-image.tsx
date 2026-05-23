@@ -1,13 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import type { ResolvedPresentation } from "@/lib/media/presentation/types";
 import { cn } from "@/lib/utils";
 
 type MediaItemImageProps = {
   src: string;
   alt: string;
   priority?: boolean;
-  sizes: string;
+  presentation: ResolvedPresentation;
+  onReady?: () => void;
   className?: string;
 };
 
@@ -15,7 +17,8 @@ export function MediaItemImage({
   src,
   alt,
   priority = false,
-  sizes,
+  presentation,
+  onReady,
   className,
 }: MediaItemImageProps) {
   return (
@@ -24,8 +27,13 @@ export function MediaItemImage({
       alt={alt}
       fill
       priority={priority}
-      className={cn("object-cover", className)}
-      sizes={sizes}
+      sizes={presentation.sizes}
+      className={cn("h-full w-full", className)}
+      style={{
+        objectFit: presentation.fit,
+        objectPosition: presentation.objectPosition,
+      }}
+      onLoad={onReady}
     />
   );
 }

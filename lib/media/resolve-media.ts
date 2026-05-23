@@ -31,6 +31,13 @@ export function resolveMediaSettings(
   };
 }
 
+function resolvePresentation(
+  raw: MediaItemRaw["presentation"],
+): MediaImage["presentation"] {
+  if (!raw) return undefined;
+  return { ...raw };
+}
+
 export function resolveProjectMedia(
   items: MediaItemRaw[],
   slug: string,
@@ -56,6 +63,7 @@ export function resolveProjectMedia(
         alt,
         caption,
         priority: item.priority,
+        presentation: resolvePresentation(item.presentation),
       };
       return resolved;
     }
@@ -64,7 +72,7 @@ export function resolveProjectMedia(
       id,
       type: "video",
       src: item.src,
-      poster: item.poster,
+      poster: item.poster ?? item.presentation?.posterImage,
       thumbnail: item.thumbnail,
       alt,
       caption,
@@ -72,6 +80,7 @@ export function resolveProjectMedia(
       playsInline: item.playsInline ?? true,
       loop: item.loop ?? false,
       duration: item.duration,
+      presentation: resolvePresentation(item.presentation),
     };
     return resolved;
   });

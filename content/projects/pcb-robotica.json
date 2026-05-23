@@ -1,15 +1,15 @@
 {
   "title": {
-    "es": "PCB Robotica",
-    "en": "Robotics PCB"
+    "es": "Plataforma Universal de Control para Robots Brushless",
+    "en": "Universal Brushless Robot Control Platform"
   },
   "description": {
-    "es": "Descripción del proyecto.",
-    "en": "Project description."
+    "es": "Diseño y desarrollo completo de una plataforma electrónica universal para robots de competición, especialmente orientada a la categoría de sumo de la Liga Nacional de Robótica. El proyecto incluyó el diseño esquemático, layout de PCB, protecciones eléctricas, arquitectura de comunicaciones y desarrollo completo del firmware.\n\nLa placa fue diseñada como una solución reutilizable y adaptable para distintos tipos de robots, incorporando múltiples interfaces de comunicación, soporte para sensores industriales, control de motores brushless, adquisición de datos mediante microSD y compatibilidad con dispositivos de 3.3 V y 5 V.\n\nTodo el sistema está basado en un ESP32-S3-MINI-1 y fue desarrollado utilizando ESP-IDF, incluyendo librerías personalizadas programadas desde cero en lenguaje C para maximizar el rendimiento, la flexibilidad y la escalabilidad de la plataforma.",
+    "en": "Complete design and development of a universal embedded electronics platform for competition robots, primarily focused on the sumo category of the “National Robotics League”. The project included schematic design, PCB layout, electrical protection systems, communication architecture, and full firmware development.\n\nThe board was designed as a reusable and adaptable solution for different types of robots, integrating multiple communication interfaces, support for industrial sensors, brushless motor control, data logging through microSD storage, and compatibility with both 3.3 V and 5 V devices.\n\nThe entire system is based on the ESP32-S3-MINI-1 microcontroller and was developed using ESP-IDF, including fully custom low-level libraries written from scratch in C to maximize performance, flexibility, and scalability."
   },
   "shortDescription": {
-    "es": "Resumen breve.",
-    "en": "Short summary."
+    "es": "PCB modular y altamente versátil para el control de robots con motores brushless, diseñada para competencias de robótica y desarrollada íntegramente utilizando ESP32-S3 y ESP-IDF.",
+    "en": "Modular and highly versatile PCB designed for controlling brushless robots in robotics competitions, fully developed using ESP32-S3 and ESP-IDF."
   },
   "tagIds": [
     "aerospace",
@@ -17,23 +17,61 @@
     "fpga"
   ],
   "technologies": [],
+  "coverImage": "/images/projects/pcb-robotica/20250915_083214.jpg",
+  "galleryImages": [
+    "/images/projects/pcb-robotica/20250915_083202.jpg",
+    "/images/projects/pcb-robotica/20250915_083214.jpg"
+  ],
   "media": [
     {
-      "type": "image",
-      "src": "/images/projects/pcb-robotica/pcb.webp",
+      "order": 0,
+      "type": "video",
+      "src": "/videos/projects/pcb-robotica/20250909_160539.mp4",
       "alt": {
-        "es": "PCB de robótica",
-        "en": "Robotics PCB"
+        "es": "20250909_160539.mp4",
+        "en": "20250909_160539.mp4"
+      },
+      "muted": true,
+      "playsInline": true,
+      "loop": false
+    },
+    {
+      "order": 1,
+      "type": "image",
+      "src": "/images/projects/pcb-robotica/20250915_083202.jpg",
+      "alt": {
+        "es": "20250915_083202.jpg",
+        "en": "20250915_083202.jpg"
+      },
+      "priority": false
+    },
+    {
+      "order": 2,
+      "type": "image",
+      "src": "/images/projects/pcb-robotica/20250915_083214.jpg",
+      "alt": {
+        "es": "20250915_083214.jpg",
+        "en": "20250915_083214.jpg"
       },
       "priority": true
     }
   ],
+  "mediaSettings": {
+    "imageDurationMs": 5500,
+    "transition": "crossfade",
+    "autoplay": true,
+    "pauseWhenOffscreen": true,
+    "pauseOnHover": true,
+    "preload": "adjacent",
+    "manualHoldMs": 8000,
+    "reducedMotionFallback": "static-first"
+  },
   "featured": true,
   "date": "2026-05-20",
   "status": "in-progress",
   "markdownContent": {
-    "es": "## Detalle\n\nEscribe el caso de estudio en español.",
-    "en": "## Details\n\nWrite the case study in English."
+    "es": "Este proyecto tuvo lugar durante mi 7.º año del secundario, en 2025. Consistió en el diseño y desarrollo completo de una PCB genérica capaz de controlar robots con motores brushless, pensada principalmente para competir en la categoría de sumo de la Liga Nacional de Robótica, aunque también diseñada para adaptarse a cualquier otra categoría o proyecto de robótica.\nEl objetivo principal fue desarrollar una plataforma altamente versátil y reutilizable que pudiera servir como base para futuros proyectos, reduciendo considerablemente los tiempos de desarrollo y facilitando la adaptación a distintas necesidades técnicas.\nEl desarrollo abarcó todas las etapas del proyecto, desde la selección de componentes y el diseño del esquemático electrónico hasta el diseño de la PCB y la puesta en funcionamiento del sistema.\nEn cuanto a sus características técnicas, la placa puede alimentarse con tensiones de entre 7 V y 25 V. Además, cuenta con protecciones independientes contra cortocircuitos y sobretensiones tanto en la línea de alimentación principal como en las líneas de 3.3 V y 5 V, evitando que un fallo afecte la integridad de toda la electrónica.\nA su vez, la PCB fue diseñada con una amplia capacidad de comunicación y expansión. Incorpora dos puertos UART y ocho salidas I2C multiplexadas, todas capaces de operar de manera independiente con tensiones de 3.3 V o 5 V. Además, dispone de:\n•\t2 interfaces SPI.\n•\t8 entradas analógicas.\n•\t8 entradas/salidas digitales.\n•\tentre 2 y 4 conexiones dedicadas a sensores ultrasónicos (dependiendo del modelo y la configuración utilizada).\n•\t2 entradas para sensores industriales láser tipo NPN o PNP.\n•\t4 salidas PWM para el control de motores brushless.\n•\t4 entradas para encoders.\n•\t1 ranura para tarjeta microSD destinada a la recolección de datos.\nTodo el sistema se encuentra controlado por un ESP32-S3-MINI-1, un microcontrolador con conectividad Wi-Fi y Bluetooth integrada.\nEn cuanto al desarrollo de software, todo el firmware fue programado utilizando ESP-IDF, el framework oficial del fabricante del microcontrolador. Además, se desarrollaron librerías completamente personalizadas en lenguaje C, basadas directamente en las hojas de datos de los distintos integrados utilizados en la placa.\nEl objetivo de esta arquitectura de software fue permitir que la lógica específica de cada robot pudiera programarse fácilmente desde el entorno de Arduino, simplificando el desarrollo y haciendo que la plataforma fuera mucho más flexible y reutilizable para distintos tipos de robots y competencias.\n",
+    "en": "Necesito que traduzcas el siguiente texto y que tambien traduzcas liga nacional de robotica: Este proyecto tuvo lugar durante mi 7.º año del secundario, en 2025. Consistió en el diseño y desarrollo completo de una PCB genérica capaz de controlar robots con motores brushless, pensada principalmente para competir en la categoría de sumo de la Liga Nacional de Robótica, aunque también diseñada para adaptarse a cualquier otra categoría o proyecto de robótica.\nEl objetivo principal fue desarrollar una plataforma altamente versátil y reutilizable que pudiera servir como base para futuros proyectos, reduciendo considerablemente los tiempos de desarrollo y facilitando la adaptación a distintas necesidades técnicas.\nEl desarrollo abarcó todas las etapas del proyecto, desde la selección de componentes y el diseño del esquemático electrónico hasta el diseño de la PCB y la puesta en funcionamiento del sistema.\nEn cuanto a sus características técnicas, la placa puede alimentarse con tensiones de entre 7 V y 25 V. Además, cuenta con protecciones independientes contra cortocircuitos y sobretensiones tanto en la línea de alimentación principal como en las líneas de 3.3 V y 5 V, evitando que un fallo afecte la integridad de toda la electrónica.\nA su vez, la PCB fue diseñada con una amplia capacidad de comunicación y expansión. Incorpora dos puertos UART y ocho salidas I2C multiplexadas, todas capaces de operar de manera independiente con tensiones de 3.3 V o 5 V. Además, dispone de:\n•\t2 interfaces SPI.\n•\t8 entradas analógicas.\n•\t8 entradas/salidas digitales.\n•\tentre 2 y 4 conexiones dedicadas a sensores ultrasónicos (dependiendo del modelo y la configuración utilizada).\n•\t2 entradas para sensores industriales láser tipo NPN o PNP.\n•\t4 salidas PWM para el control de motores brushless.\n•\t4 entradas para encoders.\n•\t1 ranura para tarjeta microSD destinada a la recolección de datos.\nTodo el sistema se encuentra controlado por un ESP32-S3-MINI-1, un microcontrolador con conectividad Wi-Fi y Bluetooth integrada.\nEn cuanto al desarrollo de software, todo el firmware fue programado utilizando ESP-IDF, el framework oficial del fabricante del microcontrolador. Además, se desarrollaron "
   },
   "technicalDetails": [],
   "metrics": []

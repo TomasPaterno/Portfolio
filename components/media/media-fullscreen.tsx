@@ -3,8 +3,10 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useState } from "react";
 import { MediaStage } from "@/components/media/media-stage";
 import type { UseMediaSequenceReturn } from "@/hooks/use-media-sequence";
+import type { MediaFitMode } from "@/lib/media/presentation/types";
 import type { ProjectMediaItem, ProjectMediaSettings } from "@/types/media";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +28,26 @@ export function MediaFullscreen({
   title,
 }: MediaFullscreenProps) {
   const t = useTranslations("projectDetail.media");
+  const [fitOverride, setFitOverride] = useState<MediaFitMode | null>(null);
+
+  const toggleFit = useCallback(() => {
+    setFitOverride((current) => (current === "cover" ? "contain" : "cover"));
+  }, []);
+
+  useEffect(() => {
+    if (!open) {
+      setFitOverride(null);
+      return;
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "c" || e.key === "C") {
+        e.preventDefault();
+        toggleFit();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, toggleFit]);
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -51,11 +73,17 @@ export function MediaFullscreen({
                 media={media}
                 settings={settings}
                 sequence={sequence}
-                variant="gallery"
+                context="fullscreen"
+                fitOverride={fitOverride}
                 showCaption
                 className="h-full min-h-[50vh]"
               />
             </div>
+            {fitOverride ? (
+              <p className="absolute bottom-4 left-4 z-10 rounded-md bg-background/80 px-2 py-1 text-xs text-muted-foreground">
+                {fitOverride === "cover" ? "Cover" : "Contain"} (C)
+              </p>
+            ) : null}
           </div>
         </Dialog.Content>
       </Dialog.Portal>

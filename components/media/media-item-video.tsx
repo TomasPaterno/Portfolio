@@ -1,21 +1,38 @@
 "use client";
 
 import { forwardRef, useEffect } from "react";
+import {
+  cacheKey,
+  setCachedIntrinsic,
+} from "@/lib/media/presentation/intrinsic-cache";
+import type { ResolvedPresentation } from "@/lib/media/presentation/types";
+import { intrinsicFromVideoElement } from "@/hooks/use-media-intrinsic-size";
 import { cn } from "@/lib/utils";
 import type { MediaVideo } from "@/types/media";
 
 type MediaItemVideoProps = {
   item: MediaVideo;
   isActive: boolean;
+  presentation: ResolvedPresentation;
   onEnded: () => void;
   onError: () => void;
   onCanPlay: () => void;
+  onIntrinsic?: () => void;
   className?: string;
 };
 
 export const MediaItemVideo = forwardRef<HTMLVideoElement, MediaItemVideoProps>(
   function MediaItemVideo(
-    { item, isActive, onEnded, onError, onCanPlay, className },
+    {
+      item,
+      isActive,
+      presentation,
+      onEnded,
+      onError,
+      onCanPlay,
+      onIntrinsic,
+      className,
+    },
     ref,
   ) {
     useEffect(() => {
@@ -24,19 +41,32 @@ export const MediaItemVideo = forwardRef<HTMLVideoElement, MediaItemVideoProps>(
       el.currentTime = 0;
     }, [isActive, item.id, ref]);
 
+    const preload = isActive ? presentation.preload : "none";
+
     return (
       <video
         ref={ref}
         src={item.src}
         poster={item.poster}
-        className={cn("h-full w-full object-cover", className)}
+        className={cn("h-full w-full", className)}
+        style={{
+          objectFit: presentation.fit,
+          objectPosition: presentation.objectPosition,
+        }}
         muted={item.muted}
         playsInline={item.playsInline}
         loop={false}
-        preload={isActive ? "auto" : "metadata"}
+        preload={preload}
         onEnded={onEnded}
         onError={onError}
         onCanPlay={onCanPlay}
+        onLoadedMetadata={(event) => {
+          const size = intrinsicFromVideoElement(event.currentTarget);
+          if (size) {
+            setCachedIntrinsic(cacheKey(item.id, item.src), size);
+            onIntrinsic?.();
+          }
+        }}
         aria-label={item.alt}
       />
     );

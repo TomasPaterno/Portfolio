@@ -25,6 +25,26 @@
         { "type": "string", "minLength": 1 }
       ]
     },
+    "mediaPresentation": {
+      "type": "object",
+      "properties": {
+        "width": { "type": "number", "exclusiveMinimum": 0 },
+        "height": { "type": "number", "exclusiveMinimum": 0 },
+        "aspectRatio": { "type": "number", "exclusiveMinimum": 0 },
+        "focalX": { "type": "number", "minimum": 0, "maximum": 1 },
+        "focalY": { "type": "number", "minimum": 0, "maximum": 1 },
+        "cropMode": {
+          "type": "string",
+          "enum": ["auto", "cover", "contain", "fill"]
+        },
+        "posterImage": { "type": "string" },
+        "preloadStrategy": {
+          "type": "string",
+          "enum": ["none", "metadata", "auto"]
+        }
+      },
+      "additionalProperties": false
+    },
     "mediaImage": {
       "type": "object",
       "required": ["type", "src", "alt"],
@@ -36,7 +56,9 @@
         "alt": { "$ref": "#/$defs/localizedString" },
         "caption": { "$ref": "#/$defs/localizedString" },
         "priority": { "type": "boolean" },
-        "order": { "type": "integer" }
+        "order": { "type": "integer" },
+        "hidden": { "type": "boolean" },
+        "presentation": { "$ref": "#/$defs/mediaPresentation" }
       },
       "additionalProperties": false
     },
@@ -55,7 +77,9 @@
         "playsInline": { "type": "boolean", "default": true },
         "loop": { "type": "boolean", "default": false },
         "duration": { "type": "number", "exclusiveMinimum": 0 },
-        "order": { "type": "integer" }
+        "order": { "type": "integer" },
+        "hidden": { "type": "boolean" },
+        "presentation": { "$ref": "#/$defs/mediaPresentation" }
       },
       "additionalProperties": false
     },

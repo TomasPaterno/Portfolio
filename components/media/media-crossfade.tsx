@@ -12,6 +12,7 @@ type MediaCrossfadeProps = {
   itemKey: string;
   transition: MediaTransition;
   reducedMotion: boolean;
+  ready?: boolean;
   children: React.ReactNode;
   className?: string;
 };
@@ -20,6 +21,7 @@ export function MediaCrossfade({
   itemKey,
   transition,
   reducedMotion,
+  ready = true,
   children,
   className,
 }: MediaCrossfadeProps) {
@@ -33,7 +35,7 @@ export function MediaCrossfade({
         className={cn("absolute inset-0", className)}
         variants={variants}
         initial={false}
-        animate="enter"
+        animate={ready ? "enter" : { opacity: 0 }}
         exit="exit"
         transition={transitionConfig}
       >

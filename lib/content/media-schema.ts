@@ -1,11 +1,23 @@
 import { z } from "zod";
 import { projectLocalizedStringSchema } from "./localized-schema";
 
+const mediaPresentationSchema = z.object({
+  width: z.number().positive().optional(),
+  height: z.number().positive().optional(),
+  aspectRatio: z.number().positive().optional(),
+  focalX: z.number().min(0).max(1).optional(),
+  focalY: z.number().min(0).max(1).optional(),
+  cropMode: z.enum(["auto", "cover", "contain", "fill"]).optional(),
+  posterImage: z.string().optional(),
+  preloadStrategy: z.enum(["none", "metadata", "auto"]).optional(),
+});
+
 const mediaBaseSchema = z.object({
   id: z.string().optional(),
   order: z.number().int().optional(),
   /** Excluded from public gallery when true */
   hidden: z.boolean().optional(),
+  presentation: mediaPresentationSchema.optional(),
 });
 
 export const mediaImageSchema = mediaBaseSchema.extend({
@@ -48,3 +60,4 @@ export const mediaSettingsSchema = z.object({
 
 export type MediaItemRaw = z.infer<typeof mediaItemSchema>;
 export type MediaSettingsRaw = z.infer<typeof mediaSettingsSchema>;
+export type MediaPresentationRaw = z.infer<typeof mediaPresentationSchema>;

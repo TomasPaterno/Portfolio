@@ -4,6 +4,17 @@ export type MediaPreload = "adjacent" | "none" | "all-images";
 
 export type ReducedMotionFallback = "static-first" | "first-only";
 
+export type MediaPresentation = {
+  width?: number;
+  height?: number;
+  aspectRatio?: number;
+  focalX?: number;
+  focalY?: number;
+  cropMode?: "auto" | "cover" | "contain" | "fill";
+  posterImage?: string;
+  preloadStrategy?: "none" | "metadata" | "auto";
+};
+
 export type MediaImage = {
   id: string;
   type: "image";
@@ -12,6 +23,7 @@ export type MediaImage = {
   alt: string;
   caption?: string;
   priority?: boolean;
+  presentation?: MediaPresentation;
 };
 
 export type MediaVideo = {
@@ -26,6 +38,7 @@ export type MediaVideo = {
   playsInline: boolean;
   loop: boolean;
   duration?: number;
+  presentation?: MediaPresentation;
 };
 
 export type ProjectMediaItem = MediaImage | MediaVideo;
