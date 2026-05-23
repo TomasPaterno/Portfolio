@@ -14,11 +14,37 @@
   "tagIds": ["aerospace", "control-systems", "stm32"],
   "updatedAt": "2025-11-20",
   "technologies": ["STM32F4", "FreeRTOS", "C", "MAVLink", "PID"],
-  "coverImage": "/images/projects/drone-flight-controller/cover.svg",
-  "galleryImages": [
-    "/images/projects/drone-flight-controller/gallery-1.svg",
-    "/images/projects/drone-flight-controller/gallery-2.svg"
+  "media": [
+    {
+      "type": "image",
+      "src": "/images/projects/drone-flight-controller/cover.svg",
+      "alt": {
+        "es": "Render del controlador de vuelo",
+        "en": "Flight controller render"
+      },
+      "priority": true
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/drone-flight-controller/gallery-1.svg",
+      "alt": {
+        "es": "Detalle de PCB del controlador",
+        "en": "Flight controller PCB detail"
+      }
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/drone-flight-controller/gallery-2.svg",
+      "alt": {
+        "es": "Diagrama de arquitectura del sistema",
+        "en": "System architecture diagram"
+      }
+    }
   ],
+  "mediaSettings": {
+    "imageDurationMs": 6000,
+    "transition": "crossfade"
+  },
   "githubUrl": "https://github.com",
   "demoUrl": "https://example.com",
   "featured": true,

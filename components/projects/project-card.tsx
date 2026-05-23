@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
+import { ProjectCardMedia } from "@/components/media/project-card-media";
 import { ArrowUpRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { parseLocale, routing } from "@/i18n/routing";
@@ -30,17 +30,9 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
         "glow-hover flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-colors",
       )}
     >
-      <div className="relative aspect-[16/10] overflow-hidden bg-secondary">
-        <Image
-          src={project.coverImage}
-          alt={project.title}
-          fill
-          priority={priority}
-          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
-        <div className="absolute right-4 top-4 rounded-full bg-background/60 p-2 backdrop-blur-md opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="relative overflow-hidden transition-transform duration-700 group-hover:scale-[1.03]">
+        <ProjectCardMedia project={project} priority={priority} />
+        <div className="absolute right-4 top-4 z-10 rounded-full bg-background/60 p-2 backdrop-blur-md opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none">
           <ArrowUpRight className="h-4 w-4 text-primary" />
         </div>
       </div>

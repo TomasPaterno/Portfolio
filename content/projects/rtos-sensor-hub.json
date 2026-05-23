@@ -12,18 +12,20 @@
     "en": "Zephyr-based CAN sensor hub with OTA bootloader support."
   },
   "tagIds": [
-    "iot",
-    "industrial",
-    "zephyr"
+    "esp32"
   ],
-  "technologies": [
-    "Zephyr",
-    "CAN",
-    "Rust bindings",
-    "nRF52840"
+  "technologies": [],
+  "media": [
+    {
+      "type": "image",
+      "src": "/images/projects/rtos-sensor-hub/cover.svg",
+      "alt": {
+        "es": "Maquina CNC — vista principal",
+        "en": "CNC machine — main view"
+      },
+      "priority": true
+    }
   ],
-  "coverImage": "/images/projects/rtos-sensor-hub/cover.svg",
-  "galleryImages": [],
   "githubUrl": "https://github.com",
   "featured": true,
   "date": "2026-01-20",

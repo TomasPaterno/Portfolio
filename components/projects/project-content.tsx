@@ -2,7 +2,6 @@ import { getTranslations } from "next-intl/server";
 import type { Project } from "@/types/project";
 import { compileProjectMarkdown } from "@/lib/mdx/compile-mdx";
 import { MetricsBlock } from "@/components/projects/metrics-block";
-import { ProjectGallery } from "@/components/projects/project-gallery";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
 import { Separator } from "@/components/ui/separator";
 
@@ -27,19 +26,6 @@ export async function ProjectContent({ project }: ProjectContentProps) {
             {project.description}
           </p>
         </ScrollReveal>
-        {project.videoUrl && (
-          <ScrollReveal className="mt-8">
-            <div className="aspect-video overflow-hidden rounded-xl border border-border">
-              <iframe
-                src={project.videoUrl}
-                title={`${project.title} demo`}
-                className="h-full w-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </ScrollReveal>
-        )}
       </section>
 
       {project.technicalDetails.length > 0 && (
@@ -75,17 +61,6 @@ export async function ProjectContent({ project }: ProjectContentProps) {
             </h2>
           </ScrollReveal>
           <MetricsBlock metrics={project.metrics} />
-        </section>
-      )}
-
-      {project.galleryImages.length > 0 && (
-        <section id="gallery">
-          <ScrollReveal>
-            <h2 className="mb-6 font-mono text-sm uppercase tracking-wider text-primary">
-              {t("gallery")}
-            </h2>
-          </ScrollReveal>
-          <ProjectGallery images={project.galleryImages} title={project.title} />
         </section>
       )}
 

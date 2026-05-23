@@ -4,12 +4,16 @@
 
 ```
 public/
-└── images/
+├── images/
+│   └── projects/
+│       └── {slug}/
+│           ├── cover.svg | cover.webp
+│           ├── gallery-1.svg
+│           └── video-poster.webp
+└── videos/
     └── projects/
         └── {slug}/
-            ├── cover.svg | cover.jpg | cover.webp
-            ├── gallery-1.svg
-            └── gallery-2.svg
+            └── demo.mp4
 ```
 
 **Convención:** el `slug` del proyecto coincide con el nombre de carpeta.
@@ -19,10 +23,19 @@ public/
 En JSON/MDX:
 
 ```json
-"coverImage": "/images/projects/drone-flight-controller/cover.svg",
-"galleryImages": [
-  "/images/projects/drone-flight-controller/gallery-1.svg",
-  "/images/projects/drone-flight-controller/gallery-2.svg"
+"media": [
+  {
+    "type": "image",
+    "src": "/images/projects/drone-flight-controller/cover.svg",
+    "alt": { "es": "Portada", "en": "Cover" },
+    "priority": true
+  },
+  {
+    "type": "video",
+    "src": "/videos/projects/drone-flight-controller/demo.mp4",
+    "poster": "/images/projects/drone-flight-controller/video-poster.webp",
+    "alt": { "es": "Demo", "en": "Demo" }
+  }
 ]
 ```
 

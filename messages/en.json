@@ -60,7 +60,16 @@
     "stack": "Stack",
     "viewSource": "View source",
     "liveDemo": "Live demo",
-    "sectionsNav": "Page sections"
+    "sectionsNav": "Page sections",
+    "media": {
+      "previous": "Previous",
+      "next": "Next",
+      "fullscreen": "Fullscreen",
+      "close": "Close",
+      "slideOf": "Slide {current} of {total}",
+      "videoLoading": "Loading video…",
+      "videoError": "Video unavailable"
+    }
   },
   "about": {
     "metaTitle": "About",

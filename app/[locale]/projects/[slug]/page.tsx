@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -9,6 +8,7 @@ import { getProjectBySlug, getProjectSlugs } from "@/lib/content/projects";
 import { getVisibleProjectSections } from "@/lib/projects/sections";
 import { ProjectDetailShell } from "@/components/projects/project-detail-shell";
 import { ProjectContent } from "@/components/projects/project-content";
+import { ProjectHeroGallery } from "@/components/projects/project-hero-gallery";
 import { JsonLdProject } from "@/components/seo/json-ld-project";
 import { SectionWrapper } from "@/components/layout/section-wrapper";
 import { Button } from "@/components/ui/button";
@@ -96,28 +96,22 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               {t("backToProjects")}
             </Link>
           </Button>
-          <div className="relative aspect-[21/9] max-h-[420px] overflow-hidden rounded-2xl border border-border bg-secondary">
-            <Image
-              src={project.coverImage}
-              alt={project.title}
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 1200px) 100vw, 1152px"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-12">
-              <p className="font-mono text-sm uppercase tracking-wider text-primary">
-                {project.tags.join(" · ")}
-              </p>
-              <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-5xl">
-                {project.title}
-              </h1>
-              <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
-                {project.shortDescription}
-              </p>
-            </div>
-          </div>
+          <ProjectHeroGallery
+            project={project}
+            metadata={
+              <>
+                <p className="font-mono text-sm uppercase tracking-wider text-primary">
+                  {project.tags.join(" · ")}
+                </p>
+                <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl lg:text-5xl">
+                  {project.title}
+                </h1>
+                <p className="max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+                  {project.shortDescription}
+                </p>
+              </>
+            }
+          />
         </div>
       </div>
 

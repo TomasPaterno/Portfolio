@@ -1,6 +1,12 @@
 import type { Locale } from "@/i18n/routing";
 import { pickLocalized } from "@/lib/i18n/localized";
 import { resolveTagLabels } from "@/lib/content/registries";
+import {
+  getCoverFromMedia,
+  getGalleryImagesFromMedia,
+  normalizeProjectMedia,
+} from "@/lib/media/normalize-project-media";
+import { resolveMediaSettings, resolveProjectMedia } from "@/lib/media/resolve-media";
 import type {
   ProjectFrontmatterRaw,
   ProjectMetricRaw,
@@ -45,29 +51,36 @@ export async function resolveProject(
   slug: string,
   locale: Locale,
 ): Promise<Project> {
-  const tags = await resolveTagLabels(raw.tagIds, locale);
+  const normalized = normalizeProjectMedia(raw, slug);
+  const media = resolveProjectMedia(normalized.media ?? [], slug, locale);
+  const mediaSettings = resolveMediaSettings(normalized.mediaSettings);
+  const coverImage = getCoverFromMedia(media, normalized.coverImage);
+  const galleryImages = getGalleryImagesFromMedia(media);
+
+  const tags = await resolveTagLabels(normalized.tagIds, locale);
   return {
     slug,
-    title: pickLocalized(raw.title, locale),
-    description: pickLocalized(raw.description, locale),
-    shortDescription: pickLocalized(raw.shortDescription, locale),
-    tagIds: raw.tagIds,
+    title: pickLocalized(normalized.title, locale),
+    description: pickLocalized(normalized.description, locale),
+    shortDescription: pickLocalized(normalized.shortDescription, locale),
+    tagIds: normalized.tagIds,
     tags,
-    technologies: raw.technologies,
-    coverImage: raw.coverImage,
-    galleryImages: raw.galleryImages,
-    githubUrl: raw.githubUrl,
-    demoUrl: raw.demoUrl,
-    featured: raw.featured,
-    date: raw.date,
-    updatedAt: raw.updatedAt,
-    status: raw.status,
-    markdownContent: raw.markdownContent
-      ? pickLocalized(raw.markdownContent, locale)
+    technologies: normalized.technologies,
+    media,
+    mediaSettings,
+    coverImage,
+    galleryImages,
+    githubUrl: normalized.githubUrl,
+    demoUrl: normalized.demoUrl,
+    featured: normalized.featured,
+    date: normalized.date,
+    updatedAt: normalized.updatedAt,
+    status: normalized.status,
+    markdownContent: normalized.markdownContent
+      ? pickLocalized(normalized.markdownContent, locale)
       : undefined,
-    technicalDetails: resolveTechnicalDetails(raw.technicalDetails, locale),
-    metrics: resolveMetrics(raw.metrics, locale),
-    videoUrl: raw.videoUrl,
-    seo: resolveSeo(raw.seo, locale),
+    technicalDetails: resolveTechnicalDetails(normalized.technicalDetails, locale),
+    metrics: resolveMetrics(normalized.metrics, locale),
+    seo: resolveSeo(normalized.seo, locale),
   };
 }

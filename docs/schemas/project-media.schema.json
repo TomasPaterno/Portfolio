@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://portfolio.local/schemas/project-media.schema.json",
+  "title": "ProjectMedia",
+  "description": "Ordered media items for portfolio projects (images and self-hosted video)",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "oneOf": [
+      { "$ref": "#/$defs/mediaImage" },
+      { "$ref": "#/$defs/mediaVideo" }
+    ]
+  },
+  "$defs": {
+    "localizedString": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["es", "en"],
+          "properties": {
+            "es": { "type": "string", "minLength": 1 },
+            "en": { "type": "string", "minLength": 1 }
+          }
+        },
+        { "type": "string", "minLength": 1 }
+      ]
+    },
+    "mediaImage": {
+      "type": "object",
+      "required": ["type", "src", "alt"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "const": "image" },
+        "src": { "type": "string", "pattern": "^/" },
+        "thumbnail": { "type": "string", "pattern": "^/" },
+        "alt": { "$ref": "#/$defs/localizedString" },
+        "caption": { "$ref": "#/$defs/localizedString" },
+        "priority": { "type": "boolean" },
+        "order": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "mediaVideo": {
+      "type": "object",
+      "required": ["type", "src", "alt"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "const": "video" },
+        "src": { "type": "string" },
+        "poster": { "type": "string", "pattern": "^/" },
+        "thumbnail": { "type": "string", "pattern": "^/" },
+        "alt": { "$ref": "#/$defs/localizedString" },
+        "caption": { "$ref": "#/$defs/localizedString" },
+        "muted": { "type": "boolean", "default": true },
+        "playsInline": { "type": "boolean", "default": true },
+        "loop": { "type": "boolean", "default": false },
+        "duration": { "type": "number", "exclusiveMinimum": 0 },
+        "order": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "mediaSettings": {
+      "type": "object",
+      "properties": {
+        "imageDurationMs": { "type": "integer", "minimum": 1000 },
+        "transition": {
+          "type": "string",
+          "enum": ["crossfade", "slide", "fade-blur"]
+        },
+        "autoplay": { "type": "boolean" },
+        "pauseWhenOffscreen": { "type": "boolean" },
+        "pauseOnHover": { "type": "boolean" },
+        "preload": {
+          "type": "string",
+          "enum": ["adjacent", "none", "all-images"]
+        },
+        "manualHoldMs": { "type": "integer", "minimum": 1000 },
+        "reducedMotionFallback": {
+          "type": "string",
+          "enum": ["static-first", "first-only"]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

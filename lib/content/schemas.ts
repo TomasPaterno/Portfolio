@@ -1,4 +1,8 @@
 import { z } from "zod";
+import { projectLocalizedStringSchema } from "./localized-schema";
+import { mediaItemSchema, mediaSettingsSchema } from "./media-schema";
+
+export { projectLocalizedStringSchema } from "./localized-schema";
 
 export const localizedStringSchema = z.object({
   es: z.string(),
@@ -9,14 +13,6 @@ export const localizedStringArraySchema = z.object({
   es: z.array(z.string()),
   en: z.array(z.string()),
 });
-
-export const projectLocalizedStringSchema = z.union([
-  z.object({
-    es: z.string().min(1),
-    en: z.string().min(1),
-  }),
-  z.string().min(1),
-]);
 
 export const localizedSeoSchema = z.object({
   title: projectLocalizedStringSchema.optional(),
@@ -35,27 +31,44 @@ export const metricSchema = z.object({
   unit: projectLocalizedStringSchema.optional(),
 });
 
-export const projectFrontmatterSchema = z.object({
-  slug: z.string().optional(),
-  title: projectLocalizedStringSchema,
-  description: projectLocalizedStringSchema,
-  shortDescription: projectLocalizedStringSchema,
-  tagIds: z.array(z.string()).min(1),
-  technologies: z.array(z.string()),
-  coverImage: z.string(),
-  galleryImages: z.array(z.string()).default([]),
-  githubUrl: z.string().url().optional(),
-  demoUrl: z.string().url().optional(),
-  featured: z.boolean().default(false),
-  date: z.string(),
-  updatedAt: z.string().optional(),
-  status: z.enum(["completed", "in-progress", "archived"]),
-  markdownContent: projectLocalizedStringSchema.optional(),
-  technicalDetails: z.array(technicalDetailSchema).default([]),
-  metrics: z.array(metricSchema).default([]),
-  videoUrl: z.string().url().optional(),
-  seo: localizedSeoSchema.optional(),
-});
+export const projectFrontmatterSchema = z
+  .object({
+    slug: z.string().optional(),
+    title: projectLocalizedStringSchema,
+    description: projectLocalizedStringSchema,
+    shortDescription: projectLocalizedStringSchema,
+    tagIds: z.array(z.string()).min(1),
+    technologies: z.array(z.string()),
+    /** @deprecated Use `media` array. Required when `media` is absent. */
+    coverImage: z.string().optional(),
+    /** @deprecated Use `media` array. */
+    galleryImages: z.array(z.string()).default([]),
+    media: z.array(mediaItemSchema).min(1).optional(),
+    mediaSettings: mediaSettingsSchema.optional(),
+    githubUrl: z.string().url().optional(),
+    demoUrl: z.string().url().optional(),
+    featured: z.boolean().default(false),
+    date: z.string(),
+    updatedAt: z.string().optional(),
+    status: z.enum(["completed", "in-progress", "archived"]),
+    markdownContent: projectLocalizedStringSchema.optional(),
+    technicalDetails: z.array(technicalDetailSchema).default([]),
+    metrics: z.array(metricSchema).default([]),
+    /** @deprecated Use self-hosted video in `media`. */
+    videoUrl: z.string().optional(),
+    seo: localizedSeoSchema.optional(),
+  })
+  .superRefine((data, ctx) => {
+    const hasMedia = data.media && data.media.length > 0;
+    const hasLegacy = !!data.coverImage;
+    if (!hasMedia && !hasLegacy) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Project must define `media` (min 1 item) or legacy `coverImage`",
+        path: ["media"],
+      });
+    }
+  });
 
 export const navigationItemSchema = z.object({
   href: z.string(),

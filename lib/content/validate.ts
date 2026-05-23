@@ -6,6 +6,8 @@ import { aboutSchema } from "@/lib/content/schemas";
 import { siteSchema } from "@/lib/content/site";
 import { skillsSchema } from "@/lib/content/skills";
 import { projectFrontmatterSchema } from "@/lib/content/project-schema";
+import { normalizeProjectMedia } from "@/lib/media/normalize-project-media";
+import type { MediaItemRaw } from "@/lib/content/media-schema";
 
 const tagsSchema = z.record(
   z.string(),
@@ -93,19 +95,54 @@ async function validateRegistries(root: string) {
   return tagsSchema.parse(tagsRaw);
 }
 
+async function validateMediaPaths(
+  publicDir: string,
+  item: MediaItemRaw,
+  slug: string,
+  issues: ContentIssue[],
+) {
+  const paths: string[] = [item.src];
+  if (item.type === "image" && item.thumbnail) paths.push(item.thumbnail);
+  if (item.type === "video") {
+    if (item.poster) paths.push(item.poster);
+    if (item.thumbnail) paths.push(item.thumbnail);
+  }
+  for (const p of paths) {
+    if (!p.startsWith("/")) continue;
+    if (!(await fileExists(publicDir, p))) {
+      issues.push({
+        level: "error",
+        message: `Project ${slug}: missing media asset ${p}`,
+      });
+    }
+  }
+}
+
 async function validateProjectAssets(
   publicDir: string,
   data: z.infer<typeof projectFrontmatterSchema>,
   slug: string,
   issues: ContentIssue[],
 ) {
-  if (!(await fileExists(publicDir, data.coverImage))) {
-    issues.push({ level: "error", message: `Project ${slug}: missing coverImage ${data.coverImage}` });
+  const normalized = normalizeProjectMedia(data, slug);
+  const media = normalized.media ?? [];
+
+  for (const item of media) {
+    await validateMediaPaths(publicDir, item, slug, issues);
   }
-  for (const img of data.galleryImages) {
-    if (!(await fileExists(publicDir, img))) {
-      issues.push({ level: "error", message: `Project ${slug}: missing gallery image ${img}` });
-    }
+
+  if (!data.media?.length && data.coverImage) {
+    issues.push({
+      level: "warn",
+      message: `Project ${slug}: uses legacy coverImage/galleryImages — migrate to media[]`,
+    });
+  }
+
+  if (data.videoUrl && !data.videoUrl.startsWith("/videos/")) {
+    issues.push({
+      level: "warn",
+      message: `Project ${slug}: deprecated videoUrl embed — use self-hosted /videos/... in media[]`,
+    });
   }
 
   const placeholders = ["https://github.com", "https://example.com"];

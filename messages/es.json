@@ -60,7 +60,16 @@
     "stack": "Stack",
     "viewSource": "Ver código",
     "liveDemo": "Demo en vivo",
-    "sectionsNav": "Secciones de la página"
+    "sectionsNav": "Secciones de la página",
+    "media": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "fullscreen": "Pantalla completa",
+      "close": "Cerrar",
+      "slideOf": "Diapositiva {current} de {total}",
+      "videoLoading": "Cargando video…",
+      "videoError": "Video no disponible"
+    }
   },
   "about": {
     "metaTitle": "Sobre mí",

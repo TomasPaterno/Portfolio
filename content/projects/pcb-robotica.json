@@ -17,8 +17,17 @@
     "fpga"
   ],
   "technologies": [],
-  "coverImage": "/images/projects/pcb-robotica/pcb.webp",
-  "galleryImages": [],
+  "media": [
+    {
+      "type": "image",
+      "src": "/images/projects/pcb-robotica/pcb.webp",
+      "alt": {
+        "es": "PCB de robótica",
+        "en": "Robotics PCB"
+      },
+      "priority": true
+    }
+  ],
   "featured": true,
   "date": "2026-05-20",
   "status": "in-progress",

@@ -6,5 +6,6 @@
   "industrial": { "es": "industrial", "en": "industrial" },
   "zephyr": { "es": "zephyr", "en": "zephyr" },
   "fpga": { "es": "fpga", "en": "fpga" },
-  "dsp": { "es": "dsp", "en": "dsp" }
+  "dsp": { "es": "dsp", "en": "dsp" },
+  "esp32": { "es": "esp32", "en": "esp32" }
 }

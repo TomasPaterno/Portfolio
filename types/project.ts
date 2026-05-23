@@ -1,4 +1,5 @@
 import type { LocalizedString } from "@/lib/i18n/localized";
+import type { ProjectMediaItem, ProjectMediaSettings } from "@/types/media";
 
 /** Resolved project for a single locale (flattened strings). */
 export type Project = {
@@ -11,7 +12,12 @@ export type Project = {
   /** Localized display labels from tag registry. */
   tags: string[];
   technologies: string[];
+  /** Ordered gallery items (images + videos). */
+  media: ProjectMediaItem[];
+  mediaSettings: ProjectMediaSettings;
+  /** Derived from first image/poster for SEO and cards fallback. */
   coverImage: string;
+  /** @deprecated Derived image URLs from `media`. */
   galleryImages: string[];
   githubUrl?: string;
   demoUrl?: string;
@@ -22,7 +28,6 @@ export type Project = {
   markdownContent?: string;
   technicalDetails: TechnicalDetail[];
   metrics: ProjectMetric[];
-  videoUrl?: string;
   seo?: ProjectSeo;
 };
 

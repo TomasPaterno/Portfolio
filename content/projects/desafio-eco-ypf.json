@@ -1,0 +1,120 @@
+{
+  "title": {
+    "es": "Sistema Embebido de Monitoreo para Vehículo Eléctrico",
+    "en": "Embedded Monitoring System for Electric Vehicle"
+  },
+  "description": {
+    "es": "Diseño y desarrollo completo de una plataforma electrónica para el monitoreo de un vehículo eléctrico participante del Desafío ECO YPF. El sistema fue desarrollado íntegramente de manera individual e incluyó diseño esquemático, PCB, firmware y comunicación entre módulos mediante RS-485.\n\nLa solución permite medir tensiones de hasta 80 V, corriente, velocidad y otros parámetros críticos en tiempo real, además de transmitir telemetría al equipo técnico durante la carrera. El sistema está basado en un ESP32-S3 y fue programado completamente utilizando ESP-IDF, incluyendo el desarrollo de librerías personalizadas desde cero para los distintos integrados utilizados.",
+    "en": "Complete design and development of an embedded electronics platform for monitoring an electric vehicle competing in the Desafío ECO YPF. The entire system was developed individually and included schematic design, PCB layout, firmware development, and communication between modules through RS-485.\n\nThe platform is capable of measuring voltages up to 80 V, current consumption, speed, and other critical parameters in real time, while also transmitting telemetry data to the pit crew during the race. The system is based on an ESP32-S3 and was fully programmed using ESP-IDF, including the development of fully custom low-level libraries for the integrated circuits used in the PCB."
+  },
+  "shortDescription": {
+    "es": "Sistema electrónico de telemetría y monitoreo en tiempo real para un vehículo eléctrico de competición, desarrollado íntegramente desde el diseño de hardware hasta la programación del firmware utilizando ESP32-S3 y ESP-IDF.",
+    "en": "Embedded telemetry and real-time monitoring system for an electric racing vehicle, fully developed from hardware design to firmware implementation using ESP32-S3 and ESP-IDF."
+  },
+  "tagIds": [
+    "aerospace"
+  ],
+  "technologies": [],
+  "coverImage": "/images/projects/desafio-eco-ypf/573738411_17947511898007244_1519329856825782450_n.jpg",
+  "galleryImages": [
+    "/images/projects/desafio-eco-ypf/573738411_17947511898007244_1519329856825782450_n.jpg",
+    "/images/projects/desafio-eco-ypf/20251029_114158.jpg",
+    "/images/projects/desafio-eco-ypf/573562969_17947512225007244_5976561176424214244_n.jpg",
+    "/images/projects/desafio-eco-ypf/_DSC7139.JPG",
+    "/images/projects/desafio-eco-ypf/_DSC7189.JPG",
+    "/images/projects/desafio-eco-ypf/574259443_17947512009007244_7490548284051773439_n.jpg",
+    "/images/projects/desafio-eco-ypf/cover.svg"
+  ],
+  "media": [
+    {
+      "order": 0,
+      "type": "image",
+      "src": "/images/projects/desafio-eco-ypf/573738411_17947511898007244_1519329856825782450_n.jpg",
+      "alt": {
+        "es": "573738411_17947511898007244_1519329856825782450_n.jpg",
+        "en": "573738411_17947511898007244_1519329856825782450_n.jpg"
+      },
+      "priority": true
+    },
+    {
+      "order": 1,
+      "type": "image",
+      "src": "/images/projects/desafio-eco-ypf/20251029_114158.jpg",
+      "alt": {
+        "es": "20251029_114158.jpg",
+        "en": "20251029_114158.jpg"
+      },
+      "priority": false
+    },
+    {
+      "order": 2,
+      "type": "image",
+      "src": "/images/projects/desafio-eco-ypf/573562969_17947512225007244_5976561176424214244_n.jpg",
+      "alt": {
+        "es": "573562969_17947512225007244_5976561176424214244_n.jpg",
+        "en": "573562969_17947512225007244_5976561176424214244_n.jpg"
+      },
+      "priority": false
+    },
+    {
+      "order": 3,
+      "type": "image",
+      "src": "/images/projects/desafio-eco-ypf/_DSC7139.JPG",
+      "alt": {
+        "es": "_DSC7139.JPG",
+        "en": "_DSC7139.JPG"
+      },
+      "priority": false
+    },
+    {
+      "order": 4,
+      "type": "image",
+      "src": "/images/projects/desafio-eco-ypf/_DSC7189.JPG",
+      "alt": {
+        "es": "_DSC7189.JPG",
+        "en": "_DSC7189.JPG"
+      },
+      "priority": false
+    },
+    {
+      "order": 5,
+      "type": "image",
+      "src": "/images/projects/desafio-eco-ypf/574259443_17947512009007244_7490548284051773439_n.jpg",
+      "alt": {
+        "es": "574259443_17947512009007244_7490548284051773439_n.jpg",
+        "en": "574259443_17947512009007244_7490548284051773439_n.jpg"
+      },
+      "priority": false
+    },
+    {
+      "order": 6,
+      "hidden": true,
+      "type": "image",
+      "src": "/images/projects/desafio-eco-ypf/cover.svg",
+      "alt": {
+        "es": "Auto eléctrico — desafío eco YPF",
+        "en": "Electric vehicle — eco YPF challenge"
+      },
+      "priority": false
+    }
+  ],
+  "mediaSettings": {
+    "imageDurationMs": 5500,
+    "transition": "crossfade",
+    "autoplay": true,
+    "pauseWhenOffscreen": true,
+    "pauseOnHover": true,
+    "preload": "adjacent",
+    "manualHoldMs": 8000,
+    "reducedMotionFallback": "static-first"
+  },
+  "featured": true,
+  "date": "2026-05-23",
+  "status": "in-progress",
+  "markdownContent": {
+    "es": "Este proyecto tuvo lugar durante 7.º año del secundario, mientras también me desempeñaba como responsable del programa de robótica de mi colegio. Consistió en el diseño y desarrollo completo de una PCB dedicada al monitoreo y visualización en tiempo real de los parámetros necesarios para el piloto de un vehículo eléctrico desarrollado por la institución para competir en el desafío Desafío ECO YPF.\n\nEl desarrollo abarcó todas las etapas del proyecto, desde la selección de componentes y el diseño del esquemático electrónico hasta el diseño de la PCB y la puesta en funcionamiento del sistema.\n\nEl objetivo principal era proporcionarle tanto al piloto como al equipo en boxes toda la información necesaria en tiempo real para tomar las mejores decisiones durante la carrera. La competencia consistía en recorrer la mayor distancia posible en un período de una hora, evitando que el vehículo agotara su batería antes de finalizar.\n\nPara lograrlo, desarrollé un sistema compuesto por dos PCBs que se comunicaban entre sí mediante RS-485, lo que permitía minimizar las interferencias generadas por el motor eléctrico y captar datos provenientes tanto de la parte delantera como trasera del vehículo. Ambas placas fueron diseñadas de manera idéntica por cuestiones de costos y capacidad de mantenimiento.\n\nCada una de ellas era capaz de medir tensiones de hasta 80 V mediante cinco entradas independientes: una destinada a cada batería y otra dedicada a medir la tensión total del sistema. Además, las placas incorporaban comunicación UART para interactuar con la pantalla principal, así como entradas digitales para medir velocidad utilizando sensores de efecto Hall y permitir la conexión de botones externos ubicados en el volante.\n\nA nivel de protección eléctrica, el sistema contaba con protección contra polarización inversa, sobretensión y cortocircuitos, permitiendo además una alimentación de entrada de entre 9 V y 30 V.\n\nEl núcleo principal de la electrónica era el ESP32-S3, un microcontrolador de doble núcleo con gran capacidad de procesamiento, ideal tanto para el desarrollo actual como para futuras expansiones del sistema. Todo el firmware fue desarrollado íntegramente utilizando ESP-IDF, el framework oficial de Espressif.\n\nDebido al alto nivel de personalización de la placa y al uso de circuitos integrados avanzados —muchos de los cuales no disponían de librerías listas para usar—, desarrollé librerías completamente personalizadas desde cero. Todas fueron programadas en lenguaje C basándome directamente en las hojas de datos de cada integrado utilizado en la PCB.\n\nComo resultado, se logró desarrollar la electrónica completa del vehículo, permitiendo visualizar los datos críticos en tiempo real para el piloto y transmitirlos mediante telemetría. Todo esto aprovechando al máximo el rendimiento de los componentes y las capacidades multinúcleo del microcontrolador.",
+    "en": "This project took place during my final year of high school, while I was also leading my school's robotics program. It consisted of the complete design and development of a PCB dedicated to the real-time monitoring and visualization of the critical parameters required by the driver of an electric vehicle developed by the school to compete in the Desafío ECO YPF.\n\nThe development covered every stage of the project, from component selection and schematic design to PCB layout and full system bring-up.\n\nThe main objective was to provide both the driver and the pit crew with all the necessary real-time information to make the best strategic decisions during the race. The competition consisted of covering the greatest possible distance within one hour while ensuring the vehicle's battery would not be depleted before the end of the race.\n\nTo achieve this, I developed a system composed of two PCBs communicating through RS-485, minimizing interference generated by the electric motor while allowing data acquisition from both the front and rear sections of the vehicle. Both boards were designed identically to reduce manufacturing costs and simplify maintenance.\n\nEach PCB was capable of measuring voltages up to 80 V through five independent inputs: one for each battery and another dedicated to measuring the total system voltage. Additionally, the boards featured UART communication for interfacing with the main display, as well as digital inputs for speed measurement using Hall-effect sensors and support for external steering wheel buttons.\n\nFrom an electrical protection standpoint, the system included reverse polarity, overvoltage, and short-circuit protection, while supporting an input voltage range from 9 V to 30 V.\n\nThe core of the system was the ESP32-S3, a dual-core microcontroller with significant processing capabilities, making it ideal both for the current implementation and future expansions of the project. All firmware was developed entirely using ESP-IDF, Espressif’s official development framework.\n\nDue to the highly customized nature of the hardware and the use of advanced integrated circuits — many of which lacked readily available software libraries — I developed fully custom libraries from scratch. All of them were programmed in C directly based on the datasheets of the integrated circuits used on the PCB.\n\nAs a result, the project successfully delivered the complete electronic monitoring and telemetry system for the vehicle, enabling real-time data visualization for the driver and wireless telemetry transmission to the support team, while fully leveraging the performance of the hardware and the dual-core architecture of the microcontroller."
+  },
+  "technicalDetails": [],
+  "metrics": []
+}

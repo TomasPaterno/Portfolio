@@ -38,7 +38,6 @@ export function ProjectSidebar({
     overview: t("overview"),
     technical: t("technical"),
     metrics: t("metrics"),
-    gallery: t("gallery"),
     writeup: t("writeup"),
   };
 
